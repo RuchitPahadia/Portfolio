@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ruchit Pahadia Portfolio Website
 
-## Getting Started
+A personal portfolio website for **Ruchit Pahadia**, a final-year Computer Science Engineering student and ML/AI Engineer based in Bengaluru, India.
 
-First, run the development server:
+This project is built using a modern, performant, and developer-first design aesthetic, structured to allow easy content updates without touching layout code.
+
+## 🚀 Tech Stack
+
+- **Framework:** [Next.js 14+ (App Router, TypeScript)](https://nextjs.org/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)
+- **Icons:** [Lucide React](https://lucide.dev/) (with custom inline brand marks)
+- **Deployment:** [Vercel](https://vercel.com/)
+
+## 📂 Project Structure
+
+```
+├── app/                  # Next.js App Router root
+│   ├── globals.css       # Tailwind CSS import, custom variants, and themes
+│   ├── layout.tsx        # Base HTML skeleton & Global providers
+│   └── page.tsx          # Main Single-Page portfolio view
+├── components/           # UI Component definitions
+│   ├── ThemeProvider.tsx # Client-side theme provider (dark/light toggle)
+│   ├── Navbar.tsx        # Fixed floating menu with active-link scroll highlighting
+│   ├── Hero.tsx          # Headline, socials, CTA buttons, and ambient glow
+│   ├── About.tsx         # Detailed narrative and key quick-highlight cards
+│   ├── Experience.tsx    # Responsive vertical work experience & training timeline
+│   ├── Projects.tsx      # Responsive grid of expandable project cards
+│   ├── Skills.tsx        # Grid of skill cards categorized by specialty
+│   ├── Education.tsx     # Combined columns for academic path & certs
+│   ├── Contact.tsx       # Contact details, mail links, and pre-filled email form
+│   └── Footer.tsx        # Copyright and technology credits
+├── data/                 # Dynamic content definition (Edit to modify site text)
+│   ├── hero.ts           # Hero data config (names, CTAs, links)
+│   ├── about.ts          # Biography and statistics overview
+│   ├── experience.ts     # Career timeline details
+│   ├── projects.ts       # Project descriptions, stacks, and bullet points
+│   ├── skills.ts         # Technical skills categorized
+│   ├── education.ts      # University degrees and certificates
+│   └── contact.ts        # Direct links, email, phone, and addresses
+└── public/               # Asset folder (resume PDF, images)
+```
+
+## 🛠️ Getting Started
+
+First, install the package dependencies:
+
+```bash
+npm install
+```
+
+Run the local development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🎨 Theme Customization
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The site is configured with a **class-based dark mode strategy** (defaulting to dark mode) with a toggle switch. Custom design variables (e.g., background, cards, and accent colors) can be configured directly in [app/globals.css](file:///C:/Users/toruc/OneDrive/Desktop/Projects/Dashboard/app/globals.css):
 
-## Learn More
+- `:root` contains light mode theme variables.
+- `.dark` contains dark mode theme variables.
+- The Tailwind theme tokens are exposed via `@theme` variables.
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Deploying to Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The easiest way to deploy this app is directly through the Vercel dashboard:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push your code to a GitHub repository.
+2. Link the repository to a new project in [Vercel](https://vercel.com/new).
+3. Vercel will automatically detect Next.js settings and build the app under `npm run build`.

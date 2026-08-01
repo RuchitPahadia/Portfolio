@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc; /* Slate 50 */
+  --foreground: #0f172a; /* Slate 900 */
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --accent: #4f46e5; /* Indigo 600 */
+  --accent-muted: #818cf8; /* Indigo 400 */
+  --muted: #64748b; /* Slate 500 */
+  --muted-light: #f1f5f9; /* Slate 100 */
+  
+  --font-geist-sans: "Geist Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-geist-mono: "Geist Mono", monospace;
 }
 
-@theme inline {
+.dark {
+  --background: #030712; /* Rich deep charcoal-gray background */
+  --foreground: #f9fafb; /* Gray 50 */
+  --card-bg: #0b0f19; /* Deep navy-charcoal card */
+  --card-border: #1f2937; /* Gray 800 */
+  --accent: #6366f1; /* Indigo 500 */
+  --accent-muted: #a5b4fc; /* Muted indigo */
+  --muted: #9ca3af; /* Gray 400 */
+  --muted-light: #111827; /* Gray 900 */
+}
+
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-accent: var(--accent);
+  --color-accent-muted: var(--accent-muted);
+  --color-muted: var(--muted);
+  --color-muted-light: var(--muted-light);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Custom Base Styles */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
 }
