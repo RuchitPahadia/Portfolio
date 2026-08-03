@@ -95,7 +95,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-28 bg-background relative overflow-hidden">
+    <section id="contact" className="py-16 bg-background relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-[450px] h-[450px] bg-accent/5 dark:bg-accent/3 rounded-full blur-[120px] pointer-events-none" />
 

@@ -29,7 +29,7 @@ export default function Education() {
   };
 
   return (
-    <section id="education" className="py-28 bg-muted-light/30 border-b border-card-border/50 relative overflow-hidden">
+    <section id="education" className="py-16 bg-muted-light/30 border-b border-card-border/50 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[350px] h-[350px] bg-purple-500/5 dark:bg-purple-900/3 rounded-full blur-[120px] pointer-events-none" />
 

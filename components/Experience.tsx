@@ -29,7 +29,7 @@ export default function Experience() {
   };
 
   return (
-    <section id="experience" className="py-28 bg-background border-b border-card-border/50 relative overflow-hidden">
+    <section id="experience" className="py-16 bg-background border-b border-card-border/50 relative overflow-hidden">
       {/* Decorative background glows */}
       <div className="absolute top-1/3 left-0 w-[350px] h-[350px] bg-accent/5 dark:bg-accent/3 rounded-full blur-[120px] pointer-events-none" />
       

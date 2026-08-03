@@ -17,7 +17,7 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="py-28 bg-muted-light/30 border-b border-card-border/50 relative overflow-hidden">
+    <section id="projects" className="py-16 bg-muted-light/30 border-b border-card-border/50 relative overflow-hidden">
       {/* Decorative glows */}
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent/5 dark:bg-accent/3 rounded-full blur-[120px] pointer-events-none" />
 

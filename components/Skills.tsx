@@ -49,7 +49,7 @@ export default function Skills() {
   };
 
   return (
-    <section id="skills" className="py-28 bg-background border-b border-card-border/50 relative overflow-hidden">
+    <section id="skills" className="py-16 bg-background border-b border-card-border/50 relative overflow-hidden">
       {/* Decorative details */}
       <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] bg-indigo-500/5 dark:bg-indigo-900/3 rounded-full blur-[100px] pointer-events-none" />
 

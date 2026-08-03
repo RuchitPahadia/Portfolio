@@ -19,7 +19,7 @@ export default function About() {
   };
 
   return (
-    <section id="about" className="py-28 bg-muted-light/30 border-b border-card-border/50 relative overflow-hidden">
+    <section id="about" className="py-16 bg-muted-light/30 border-b border-card-border/50 relative overflow-hidden">
       {/* Decorative details */}
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[300px] h-[300px] bg-purple-500/5 dark:bg-purple-900/5 rounded-full blur-[100px] pointer-events-none" />
 

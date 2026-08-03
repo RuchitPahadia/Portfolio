@@ -21,7 +21,7 @@ const GithubIcon = () => (
 
 export default function GithubSection() {
   return (
-    <section id="github" className="py-20 bg-muted-light/30 border-b border-card-border/50 relative overflow-hidden">
+    <section id="github" className="py-10 bg-muted-light/30 border-b border-card-border/50 relative overflow-hidden">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
