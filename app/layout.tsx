@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ruchit-pahadia-dashboard.vercel.app"),
   title: "Ruchit Pahadia | ML Engineer & AI Developer",
   description: "Portfolio of Ruchit Pahadia, a final-year CSE student and ML Engineer based in Bengaluru, specializing in end-to-end ML, computer vision, and NLP systems.",
   keywords: ["Ruchit Pahadia", "ML Engineer", "AI Developer", "Data Scientist", "BNMIT", "Bengaluru", "Portfolio"],
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ruchit Pahadia | ML Engineer & AI Developer",
     description: "Portfolio of Ruchit Pahadia, a final-year CSE student and ML Engineer based in Bengaluru, specializing in end-to-end ML, computer vision, and NLP systems.",
-    url: "https://ruchitpahadia.vercel.app",
+    url: "https://ruchit-pahadia-dashboard.vercel.app",
     siteName: "Ruchit Pahadia Portfolio",
     locale: "en_US",
     type: "website",
@@ -30,7 +31,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ruchit Pahadia | ML Engineer & AI Developer",
     description: "Portfolio of Ruchit Pahadia, a final-year CSE student and ML Engineer based in Bengaluru, specializing in end-to-end ML, computer vision, and NLP systems.",
-  }
+  },
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

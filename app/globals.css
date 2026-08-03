@@ -14,6 +14,7 @@
   
   --font-geist-sans: "Geist Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-geist-mono: "Geist Mono", monospace;
+  --dot-color: rgba(79, 70, 229, 0.06);
 }
 
 .dark {
@@ -25,6 +26,7 @@
   --accent-muted: #a5b4fc; /* Muted indigo */
   --muted: #9ca3af; /* Gray 400 */
   --muted-light: #111827; /* Gray 900 */
+  --dot-color: rgba(165, 180, 252, 0.05);
 }
 
 @theme {
@@ -38,6 +40,12 @@
   --color-muted-light: var(--muted-light);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  --animate-blink: blink 1s step-end infinite;
+  @keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
 }
 
 /* Custom Base Styles */
@@ -51,4 +59,9 @@ body {
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
   min-height: 100vh;
+}
+
+.bg-dot-grid {
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+  background-size: 28px 28px;
 }

@@ -1,11 +1,54 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { MapPin, ArrowRight, FileText } from "lucide-react";
 import { heroData } from "@/data/hero";
+import ResumeModal from "./ResumeModal";
+
+const roles = [
+  { text: "Machine Learning Engineer", color: "text-accent" },
+  { text: "Deep Learning Specialist", color: "text-purple-500 dark:text-purple-400" },
+  { text: "Computer Vision Developer", color: "text-emerald-500 dark:text-emerald-400" },
+  { text: "NLP Systems Architect", color: "text-amber-500 dark:text-amber-400" }
+];
+
+function TypedRole() {
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [subIndex, setSubIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = roles[roleIndex].text;
+    const speed = deleting ? 35 : 55;
+
+    if (!deleting && subIndex === current.length) {
+      const pause = setTimeout(() => setDeleting(true), 1500);
+      return () => clearTimeout(pause);
+    }
+    if (deleting && subIndex === 0) {
+      setDeleting(false);
+      setRoleIndex((i) => (i + 1) % roles.length);
+      return;
+    }
+
+    const t = setTimeout(() => {
+      setSubIndex((i) => i + (deleting ? -1 : 1));
+    }, speed);
+    return () => clearTimeout(t);
+  }, [subIndex, deleting, roleIndex]);
+
+  return (
+    <span className={`font-mono ${roles[roleIndex].color}`}>
+      {roles[roleIndex].text.slice(0, subIndex)}
+      <span className="animate-blink border-r-2 border-current ml-0.5" />
+    </span>
+  );
+}
 
 export default function Hero() {
+  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -103,7 +146,7 @@ export default function Hero() {
       <div className="absolute bottom-10 left-10 w-[250px] h-[250px] bg-purple-500/10 dark:bg-purple-900/5 rounded-full blur-[80px] pointer-events-none" />
 
       {/* Grid Pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(128,128,128,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(128,128,128,0.03)_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-dot-grid [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
@@ -129,10 +172,19 @@ export default function Hero() {
             Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-purple-400">{heroData.name}</span>
           </motion.h1>
 
+          {/* Typing Role Animation */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-6 flex h-8 items-center justify-center gap-2 text-xl sm:text-2xl md:text-3xl font-semibold"
+          >
+            <span className="text-accent font-mono">&gt;</span>
+            <TypedRole />
+          </motion.div>
+
           {/* Subtitle/Tagline */}
           <motion.p
             variants={itemVariants}
-            className="mt-6 text-lg sm:text-xl md:text-2xl text-muted leading-relaxed max-w-3xl mx-auto"
+            className="mt-8 text-lg sm:text-xl md:text-2xl text-muted leading-relaxed max-w-3xl mx-auto"
           >
             {heroData.title}
           </motion.p>
@@ -183,9 +235,16 @@ export default function Hero() {
                 <a
                   key={cta.label}
                   href={cta.href}
-                  onClick={isAnchor ? (e) => handleScroll(e, cta.href) : undefined}
-                  target={isResume ? "_blank" : undefined}
-                  rel={isResume ? "noopener noreferrer" : undefined}
+                  onClick={
+                    isResume
+                      ? (e) => {
+                          e.preventDefault();
+                          setIsResumeModalOpen(true);
+                        }
+                      : isAnchor
+                      ? (e) => handleScroll(e, cta.href)
+                      : undefined
+                  }
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-muted-light border border-card-border text-foreground font-medium hover:bg-card-border hover:border-muted transition-all duration-300 cursor-pointer"
                 >
                   {isResume && <FileText size={18} className="text-accent" />}
@@ -219,6 +278,8 @@ export default function Hero() {
           />
         </div>
       </motion.div>
+
+      <ResumeModal isOpen={isResumeModalOpen} onClose={() => setIsResumeModalOpen(false)} />
     </section>
   );
 }
