@@ -5,7 +5,7 @@ import { GraduationCap, CheckCircle, Award, Activity } from "lucide-react";
 
 export default function EducationPanel() {
   return (
-    <section id="education" className="border border-card-border bg-card-bg rounded p-5 font-mono text-sm shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between h-[490px]">
+    <section id="education" className="border border-card-border bg-card-bg rounded p-5 font-mono text-sm shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between h-[580px]">
       {/* Panel Header - Large Highlighted Tab */}
       <div>
         <div className="flex items-center justify-between border-b border-card-border pb-3 mb-4 select-none">

@@ -25,7 +25,7 @@ export default function FleetPanel() {
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {[...projects]
           .sort((a, b) => {
             if (a.status === "BUILT" && b.status !== "BUILT") return -1;
