@@ -86,5 +86,21 @@ export const projects: Project[] = [
     links: {
       github: "https://github.com/RuchitPahadia/sih-2025-health-chatbot"
     }
+  },
+  {
+    title: "Traffic Violation Detection System",
+    description: "Advanced computer vision pipeline detecting wrong-way driving, motorcycle overloading (trippling), seatbelt, and helmet compliance, with real-time Automatic License Plate Recognition (ALPR).",
+    tech: ["Python", "PyTorch", "YOLOv8", "SORT", "EasyOCR", "CRNN", "OpenCV"],
+    period: "2025",
+    bullets: [
+      "Engineered real-time vehicle tracking using YOLOv8/11 and SORT, matching license plates with high-precision custom YOLOv8 localization",
+      "Implemented a custom PyTorch CRNN character recognition engine and EasyOCR fallback optimized for Indian license plate fonts",
+      "Built violation detection classifiers verifying helmet/seatbelt compliance, wrong-lane driving, and motorcycle overloading (trippling)",
+      "Structured analytical logging pipeline reporting tracking IDs, transcribed plates, infraction labels, and timestamps to CSV"
+    ],
+    status: "BUILT",
+    links: {
+      github: "https://github.com/RuchitPahadia/Traffic_Violation_detection"
+    }
   }
 ];
