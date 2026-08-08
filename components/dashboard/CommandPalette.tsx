@@ -24,20 +24,38 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
 
   const items: PaletteItem[] = [
     {
+      id: "skills",
+      title: "Jump to Skills Panel",
+      category: "Navigation",
+      action: () => {
+        onNavigate("skills");
+        setIsOpen(false);
+      },
+    },
+    {
+      id: "experience",
+      title: "Jump to Experience Panel",
+      category: "Navigation",
+      action: () => {
+        onNavigate("experience");
+        setIsOpen(false);
+      },
+    },
+    {
+      id: "education",
+      title: "Jump to Education Panel",
+      category: "Navigation",
+      action: () => {
+        onNavigate("education");
+        setIsOpen(false);
+      },
+    },
+    {
       id: "fleet",
       title: "Jump to Fleet Panel (Projects)",
       category: "Navigation",
       action: () => {
         onNavigate("fleet");
-        setIsOpen(false);
-      },
-    },
-    {
-      id: "signal",
-      title: "Jump to Signal Panel (Skills)",
-      category: "Navigation",
-      action: () => {
-        onNavigate("signal");
         setIsOpen(false);
       },
     },

@@ -26,7 +26,13 @@ export default function FleetPanel() {
 
       {/* Projects Grid */}
       <div className="grid grid-cols-1 gap-4">
-        {projects.map((project, index) => {
+        {[...projects]
+          .sort((a, b) => {
+            if (a.status === "BUILT" && b.status !== "BUILT") return -1;
+            if (a.status !== "BUILT" && b.status === "BUILT") return 1;
+            return 0;
+          })
+          .map((project, index) => {
           const isExpanded = expandedIndex === index;
           const isBuilt = project.status === "BUILT";
           

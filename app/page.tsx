@@ -5,7 +5,9 @@ import StatusBar from "@/components/dashboard/StatusBar";
 import BootSequence from "@/components/dashboard/BootSequence";
 import CommandPalette from "@/components/dashboard/CommandPalette";
 import FleetPanel from "@/components/dashboard/FleetPanel";
-import SignalPanel from "@/components/dashboard/SignalPanel";
+import SkillsPanel from "@/components/dashboard/SkillsPanel";
+import ExperiencePanel from "@/components/dashboard/ExperiencePanel";
+import EducationPanel from "@/components/dashboard/EducationPanel";
 import CommsPanel from "@/components/dashboard/CommsPanel";
 
 export default function Home() {
@@ -32,16 +34,16 @@ export default function Home() {
 
           {/* main dashboard console grid */}
           <main className="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-              {/* Left Console: Fleet panel (Projects) */}
-              <div className="lg:col-span-6 xl:col-span-7">
-                <FleetPanel />
-              </div>
+            {/* Top row: Skills, Experience, and Education side-by-side on desktop */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <SkillsPanel />
+              <ExperiencePanel />
+              <EducationPanel />
+            </div>
 
-              {/* Right Console: Signal spectrum (Skills/Experience/Academics) */}
-              <div className="lg:col-span-6 xl:col-span-5">
-                <SignalPanel />
-              </div>
+            {/* Middle row: Fleet panel (Projects) */}
+            <div className="w-full">
+              <FleetPanel />
             </div>
 
             {/* Bottom Console: Comms Ports */}
