@@ -124,7 +124,7 @@ export default function TerminalPanel() {
   };
 
   return (
-    <div className="border border-card-border bg-[#0E1013] rounded overflow-hidden font-mono text-xs flex flex-col h-[320px] relative select-none">
+    <div className="border border-card-border bg-[#0E1013] rounded overflow-hidden font-mono text-xs flex flex-col h-[320px] relative">
       {/* Terminal Title Bar */}
       <div className="flex items-center justify-between bg-card-bg/60 border-b border-card-border/80 px-4 py-2 select-none">
         <div className="flex items-center gap-2 font-bold text-foreground text-[11px] uppercase tracking-wider">
@@ -165,7 +165,7 @@ export default function TerminalPanel() {
       </div>
 
       {/* Terminal Content Buffer */}
-      <div className="flex-1 p-4 overflow-y-auto space-y-1.5 text-xs text-accent-teal custom-scrollbar selection:bg-accent-teal/20">
+      <div className="flex-1 p-4 overflow-y-auto space-y-1.5 text-xs text-accent-teal custom-scrollbar selection:bg-accent-teal/20 select-text">
         {logs.map((log, idx) => {
           let colorClass = "text-accent-teal";
           if (log.type === "input") colorClass = "text-foreground font-bold";
