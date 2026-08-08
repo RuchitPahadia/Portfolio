@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Mail, Phone, GitPullRequest, Code, Send, Terminal } from "lucide-react";
+import { Mail, Phone, GitPullRequest, Code, Terminal } from "lucide-react";
 import { contactData } from "@/data/contact";
+import TerminalPanel from "./TerminalPanel";
 
 const LinkedinIcon = ({ size = 14, className = "" }: { size?: number; className?: string }) => (
   <svg
@@ -23,9 +24,6 @@ const LinkedinIcon = ({ size = 14, className = "" }: { size?: number; className?
 );
 
 export default function CommsPanel() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
   const [gitStatus, setGitStatus] = useState({
     hash: "1a0e689",
     date: "2026-08-08 18:03:56",
@@ -56,14 +54,6 @@ export default function CommsPanel() {
         setGitStatus((prev) => ({ ...prev, loading: false }));
       });
   }, []);
-
-  const handleTransmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name || !email || !message) return;
-    const subject = encodeURIComponent(`Inquiry from ${name} via Dashboard Portfolio`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-    window.location.href = `mailto:${contactData.email}?subject=${subject}&body=${body}`;
-  };
 
   return (
     <section id="comms" className="border border-card-border bg-card-bg rounded p-6 font-mono text-sm shadow-sm hover:shadow-md transition-all duration-300">
@@ -176,63 +166,9 @@ export default function CommsPanel() {
           </div>
         </div>
 
-        {/* Right column: Transmit contact form */}
+        {/* Right column: Interactive Telemetry Terminal */}
         <div className="lg:col-span-6 border-l border-card-border/30 pl-0 lg:pl-6">
-          <span className="text-xs text-muted tracking-wider uppercase mb-2.5 block select-none">
-            COMMS_TRANSMITTER
-          </span>
-
-          <form onSubmit={handleTransmit} className="space-y-3 font-sans">
-            <div>
-              <label className="block font-mono text-xs text-muted uppercase mb-1">
-                TRANSMITTER_NAME
-              </label>
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Identified sender name..."
-                className="w-full bg-background border border-card-border rounded px-3 py-2 text-sm text-foreground placeholder-muted outline-none focus:border-accent-teal transition-all duration-200 font-mono"
-              />
-            </div>
-
-            <div>
-              <label className="block font-mono text-xs text-muted uppercase mb-1">
-                REPLY_PORT (EMAIL)
-              </label>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="yourname@domain.com"
-                className="w-full bg-background border border-card-border rounded px-3 py-2 text-sm text-foreground placeholder-muted outline-none focus:border-accent-teal transition-all duration-200 font-mono"
-              />
-            </div>
-
-            <div>
-              <label className="block font-mono text-xs text-muted uppercase mb-1">
-                TRANSMISSION_PAYLOAD
-              </label>
-              <textarea
-                required
-                rows={3}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Enter details of request..."
-                className="w-full bg-background border border-card-border rounded px-3 py-2 text-sm text-foreground placeholder-muted outline-none focus:border-accent-teal transition-all duration-200 font-mono resize-none"
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full font-mono text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-1.5 bg-accent-teal hover:bg-accent-teal/90 text-[#14161A] py-2.5 rounded transition-all duration-200 cursor-pointer shadow-sm shadow-accent-teal/10"
-            >
-              <Send size={12} />
-              <span>TRANSMIT_SIGNAL</span>
-            </button>
-          </form>
+          <TerminalPanel />
         </div>
       </div>
     </section>
