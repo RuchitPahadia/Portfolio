@@ -4,6 +4,7 @@ export interface Project {
   tech: string[];
   period: string;
   bullets: string[];
+  status: "BUILT" | "IN PROGRESS";
   links: {
     github?: string;
     live?: string;
@@ -12,71 +13,78 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    title: "Carbon Footprint Monitoring System",
+    description: "AI-integrated IoT dashboard for campus carbon footprint, energy, and water consumption telemetry.",
+    tech: ["ESP32", "Raspberry Pi 5", "MQTT", "React", "Tailwind CSS", "Python"],
+    period: "2026",
+    bullets: [
+      "Engineered real-time CO2 and resource monitoring using ESP32 sensor nodes and Raspberry Pi 5 gateways via MQTT",
+      "Built a live telemetry dashboard to track utility usage, anomaly thresholds, and carbon metrics across campus buildings",
+      "Developed during IoT & Advanced AI internship at Ganaka Praudyogikee Tech Solutions"
+    ],
+    status: "IN PROGRESS",
+    links: {
+      github: "https://github.com/ruchitpahadia"
+    }
+  },
+  {
     title: "DealerXP",
-    description: "Full-stack gamification layer for automotive dealership CRM/DMS pipelines, mapping lead-to-delivery event data into XP, streaks, badges, and department leaderboards.",
+    description: "Full-stack gamification layer for automotive dealership CRM/DMS pipelines, mapping operational event telemetry into department badges and leaderboards.",
     tech: ["React", "FastAPI", "PostgreSQL", "Redis", "Docker"],
     period: "2026",
     bullets: [
-      "Engineered a scoring and anti-gaming engine that filters 2,000+ raw operational events into 20 milestone-based actions",
+      "Engineered a scoring and anti-gaming engine filtering 2,000+ raw events into 20 milestone actions",
       "Applied rate-capping, collusion gating, and behavioral anomaly detection to block point manipulation",
       "Built for the Carverse Mobility Technologies Dealership Gamification Hackathon"
     ],
+    status: "BUILT",
     links: {
       github: "https://github.com/RuchitPahadia/dealership-gamification-platform",
       live: "#"
     }
   },
   {
-    title: "Photo Orchestrator",
-    description: "Next.js 16 + TypeScript application that pools photo storage across multiple Google Drive accounts. It automatically extracts EXIF metadata and generates thumbnails in background queues.",
-    tech: ["Next.js", "TypeScript", "PostgreSQL", "Redis", "Google Drive API"],
+    title: "Drive_Orchestrator",
+    description: "Next.js application that pools photo and document storage across multiple Google Drive accounts, enabling similarity search.",
+    tech: ["Next.js", "TypeScript", "PostgreSQL", "pgvector", "Redis", "BullMQ"],
     period: "2026",
     bullets: [
       "Pools photo storage seamlessly across multiple Google Drive accounts with background token refresh management",
-      "Extracts EXIF metadata automatically and handles high-throughput thumbnail generation using Redis background jobs",
-      "Maintains PostgreSQL schema supporting pgvector extension to store photo metadata for efficient query and similarity retrieval"
+      "Extracts metadata and handles high-throughput thumbnail generation using Redis background queues",
+      "Maintains PostgreSQL database with pgvector extension to store photo metadata for similarity retrieval"
     ],
+    status: "IN PROGRESS",
     links: {
       github: "https://github.com/RuchitPahadia/Drive_Orchestrator"
     }
   },
   {
-    title: "Enterprise Authentication & Authorization System",
-    description: "Spring Boot backend providing user registration, authentication, profile management, and Role-Based Access Control (RBAC) via stateless JWT.",
+    title: "Enterprise Auth System",
+    description: "Spring Boot backend providing stateless authentication, user profiles, and Role-Based Access Control (RBAC).",
     tech: ["Java", "Spring Boot", "PostgreSQL", "Spring Security", "JWT", "Hibernate"],
     period: "2026",
     bullets: [
       "Implemented stateless JWT-based authentication and role-based access controls (USER/ADMIN/MODERATOR)",
       "Integrated BCrypt password hashing, layered controller-service-repository architecture, and Swagger/OpenAPI documentation"
     ],
+    status: "BUILT",
     links: {
       github: "https://github.com/RuchitPahadia/Enterprise_Auth"
     }
   },
   {
-    title: "Patient Handoff System (Ongoing)",
-    description: "End-to-end clinical-handoff platform featuring a transformer-based NLP summary generator and interactive chatbot.",
-    tech: ["Python", "Hugging Face Transformers", "spaCy", "Flask"],
+    title: "Clinical Decision Support System",
+    description: "AI-augmented patient handoff platform utilizing federated learning for privacy-preserving clinical report generation.",
+    tech: ["Next.js", "FastAPI", "Python", "Flower (flwr)", "Hugging Face", "spaCy"],
     period: "2025 – Present",
     bullets: [
-      "Architecting data pipelines for ingestion, entity extraction, summarisation, and dialogue handling",
-      "Generates structured handoff reports from raw clinical notes using custom NLP pipelines"
+      "Architected secure clinical ingestion and federated learning pipelines to train transformer models locally",
+      "Generates structured handoff reports and extracts clinical entities from raw text, improving communication safety",
+      "Final-year capstone project built in a 3-person team"
     ],
+    status: "IN PROGRESS",
     links: {
       github: "https://github.com/RuchitPahadia/sih-2025-health-chatbot"
-    }
-  },
-  {
-    title: "AI-Based Traffic Violation Detection System",
-    description: "Computer vision and deep learning pipeline detecting helmet absence, triple riding, and wrong-lane driving from live traffic video.",
-    tech: ["Python", "PyTorch", "OpenCV", "SORT Tracker", "Custom OCR"],
-    period: "2025",
-    bullets: [
-      "Integrated SORT-based vehicle tracking and a custom OCR model to link violations to license plates",
-      "Achieved ~91% vehicle-detection, ~87% plate-recognition accuracy, and cut false positives by 30%"
-    ],
-    links: {
-      github: "https://github.com/RuchitPahadia/Traffic_Proto"
     }
   }
 ];

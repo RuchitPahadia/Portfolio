@@ -3,30 +3,32 @@
 @variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #f8fafc; /* Slate 50 */
-  --foreground: #0f172a; /* Slate 900 */
+  --background: #f3f4f6; /* Light gray dashboard base */
+  --foreground: #111827; /* Dark text */
   --card-bg: #ffffff;
-  --card-border: #e2e8f0;
-  --accent: #4f46e5; /* Indigo 600 */
-  --accent-muted: #818cf8; /* Indigo 400 */
-  --muted: #64748b; /* Slate 500 */
-  --muted-light: #f1f5f9; /* Slate 100 */
-  
-  --font-geist-sans: "Geist Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-geist-mono: "Geist Mono", monospace;
-  --dot-color: rgba(79, 70, 229, 0.06);
+  --card-border: #e5e7eb;
+  --accent-amber: #d97706;
+  --accent-teal: #0d9488;
+  --alert: #dc2626;
+  --muted: #4b5563;
+  --muted-light: #e5e7eb;
+  --dot-color: rgba(13, 148, 136, 0.05);
+
+  --font-inter: "var(--font-inter)", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-space-mono: "var(--font-space-mono)", monospace;
 }
 
 .dark {
-  --background: #030712; /* Rich deep charcoal-gray background */
-  --foreground: #f9fafb; /* Gray 50 */
-  --card-bg: #0b0f19; /* Deep navy-charcoal card */
-  --card-border: #1f2937; /* Gray 800 */
-  --accent: #6366f1; /* Indigo 500 */
-  --accent-muted: #a5b4fc; /* Muted indigo */
-  --muted: #9ca3af; /* Gray 400 */
-  --muted-light: #111827; /* Gray 900 */
-  --dot-color: rgba(165, 180, 252, 0.05);
+  --background: #14161A; /* Deep graphite */
+  --foreground: #edeae3; /* Warm off-white */
+  --card-bg: #1d2026; /* Panel surface */
+  --card-border: #2e323d; /* Panel border */
+  --accent-amber: #ffb238; /* Active indicator amber */
+  --accent-teal: #4fd1c5; /* Signal teal */
+  --alert: #ff5c5c;
+  --muted: #9aa0a6;
+  --muted-light: #252830;
+  --dot-color: rgba(79, 209, 197, 0.04);
 }
 
 @theme {
@@ -34,13 +36,14 @@
   --color-foreground: var(--foreground);
   --color-card-bg: var(--card-bg);
   --color-card-border: var(--card-border);
-  --color-accent: var(--accent);
-  --color-accent-muted: var(--accent-muted);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-teal: var(--accent-teal);
+  --color-alert: var(--alert);
   --color-muted: var(--muted);
   --color-muted-light: var(--muted-light);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-space-mono);
+
   --animate-blink: blink 1s step-end infinite;
   @keyframes blink {
     0%, 49% { opacity: 1; }
@@ -56,7 +59,7 @@ html {
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
   min-height: 100vh;
 }
