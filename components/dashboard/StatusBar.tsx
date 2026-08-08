@@ -26,7 +26,7 @@ export default function StatusBar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-card-border bg-card-bg/95 backdrop-blur font-mono text-xs select-none">
+    <header className="sticky top-0 z-40 w-full border-b border-card-border bg-card-bg/95 backdrop-blur font-mono text-sm select-none">
       <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-3">
         {/* Left: Name & Target Role */}
         <div className="flex items-center gap-3">
@@ -34,7 +34,7 @@ export default function StatusBar() {
             <Terminal size={14} className="text-accent-teal" />
             <span>RUCHIT_PAHADIA //</span>
           </div>
-          <span className="hidden md:inline text-muted text-[10px]">
+          <span className="hidden md:inline text-muted text-xs">
             SYS_ROLE: ML_ENGINEER / AI_DEV
           </span>
         </div>
@@ -45,7 +45,7 @@ export default function StatusBar() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-amber opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-amber"></span>
           </span>
-          <span className="text-[10px] tracking-wide text-foreground font-bold uppercase">
+          <span className="text-xs tracking-wide text-foreground font-bold uppercase">
             STATUS: ONLINE — OPEN TO OPPORTUNITIES
           </span>
         </div>
@@ -53,7 +53,7 @@ export default function StatusBar() {
         {/* Right: Telemetry Clock, Theme, Actions */}
         <div className="flex items-center gap-4">
           {/* Monospace Clock */}
-          <div className="hidden sm:block text-[10px] font-medium text-foreground bg-muted-light/35 px-2 py-0.5 rounded border border-card-border/50 tabular-nums">
+          <div className="hidden sm:block text-xs font-medium text-foreground bg-muted-light/35 px-2 py-0.5 rounded border border-card-border/50 tabular-nums">
             SYS_TIME: {time || "00:00:00"}
           </div>
 
@@ -82,7 +82,7 @@ export default function StatusBar() {
               <Mail size={12} />
               <span>CONTACT</span>
             </a>
-            <span className="hidden xl:inline text-[9px] text-muted border border-dashed border-card-border px-1.5 py-0.5 rounded">
+            <span className="hidden xl:inline text-[10px] text-muted border border-dashed border-card-border px-1.5 py-0.5 rounded">
               Ctrl+K
             </span>
           </div>

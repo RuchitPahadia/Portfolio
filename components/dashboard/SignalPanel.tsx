@@ -31,22 +31,22 @@ export default function SignalPanel() {
   }, []);
 
   return (
-    <section id="signal" className="border border-card-border bg-card-bg rounded p-6 font-mono text-xs shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[500px]">
+    <section id="signal" className="border border-card-border bg-card-bg rounded p-6 font-mono text-sm shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[500px]">
       {/* Panel Header */}
       <div>
         <div className="flex items-center justify-between border-b border-card-border pb-3 mb-4 select-none">
-          <div className="flex items-center gap-2 font-bold text-foreground text-xs uppercase tracking-wider">
+          <div className="flex items-center gap-2 font-bold text-foreground text-sm uppercase tracking-wider">
             <Radio size={14} className="text-accent-teal animate-pulse" />
             <span>SIGNAL_SPECTRUM // TELEMETRY_FEED</span>
           </div>
-          <div className="text-[9px] text-muted tracking-wider">
+          <div className="text-xs text-muted tracking-wider">
             CHANNEL: CH_808.5 // GAIN: +12dB
           </div>
         </div>
 
         {/* Live Equalizer Visualizer */}
         <div className="bg-background/40 border border-card-border/60 rounded p-4 mb-4 select-none">
-          <div className="flex items-center justify-between text-[8px] text-muted mb-2">
+          <div className="flex items-center justify-between text-[10px] text-muted mb-2">
             <span>0.1 Hz</span>
             <span>SPECTRUM ANALYZER (LIVE_FEED)</span>
             <span>12.5 kHz</span>
@@ -67,7 +67,7 @@ export default function SignalPanel() {
             ))}
           </div>
 
-          <div className="flex justify-between items-center text-[8.5px] text-muted mt-2">
+          <div className="flex justify-between items-center text-xs text-muted mt-2">
             <div className="flex items-center gap-1.5">
               <Cpu size={10} className="text-accent-amber animate-spin" style={{ animationDuration: "3s" }} />
               <span>MOD: QAM-64 // DEV_LEVEL: OPTIMAL</span>
@@ -77,36 +77,36 @@ export default function SignalPanel() {
         </div>
 
         {/* Sub-Panel Selectors (Tabs) */}
-        <div className="flex items-center gap-1.5 border-b border-card-border/50 pb-2 mb-4 select-none">
+        <div className="flex flex-wrap items-center gap-1.5 border-b border-card-border/50 pb-2.5 mb-4 select-none">
           <button
             onClick={() => setActiveTab("skills")}
-            className={`px-3 py-1 rounded-sm text-[10px] font-bold border transition-all duration-200 cursor-pointer ${
+            className={`px-3 py-1 rounded-sm text-xs font-bold border transition-all duration-200 cursor-pointer ${
               activeTab === "skills"
                 ? "bg-accent-teal/10 border-accent-teal/50 text-accent-teal"
                 : "bg-background/10 border-transparent text-muted hover:text-foreground"
             }`}
           >
-            CH_00: SKILLS_SPECTRUM
+            CH_00: SKILLS
           </button>
           <button
             onClick={() => setActiveTab("experience")}
-            className={`px-3 py-1 rounded-sm text-[10px] font-bold border transition-all duration-200 cursor-pointer ${
+            className={`px-3 py-1 rounded-sm text-xs font-bold border transition-all duration-200 cursor-pointer ${
               activeTab === "experience"
                 ? "bg-accent-teal/10 border-accent-teal/50 text-accent-teal"
                 : "bg-background/10 border-transparent text-muted hover:text-foreground"
             }`}
           >
-            CH_01: EXPERIENCE_LOGS
+            CH_01: EXPERIENCE
           </button>
           <button
             onClick={() => setActiveTab("academics")}
-            className={`px-3 py-1 rounded-sm text-[10px] font-bold border transition-all duration-200 cursor-pointer ${
+            className={`px-3 py-1 rounded-sm text-xs font-bold border transition-all duration-200 cursor-pointer ${
               activeTab === "academics"
                 ? "bg-accent-teal/10 border-accent-teal/50 text-accent-teal"
                 : "bg-background/10 border-transparent text-muted hover:text-foreground"
             }`}
           >
-            CH_02: EDUCATION_METRICS
+            CH_02: EDUCATION
           </button>
         </div>
       </div>
@@ -118,7 +118,7 @@ export default function SignalPanel() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
             {/* Left Category triggers */}
             <div className="md:col-span-5 flex flex-col gap-1.5 border-r border-card-border/30 pr-0 md:pr-4">
-              <span className="text-[9px] text-muted tracking-wider uppercase mb-1 border-b border-card-border/30 pb-1 select-none">
+              <span className="text-[10px] text-muted tracking-wider uppercase mb-1 border-b border-card-border/30 pb-1 select-none">
                 SIG_CHANNELS
               </span>
               {skillCategories.map((cat, idx) => {
@@ -127,14 +127,14 @@ export default function SignalPanel() {
                   <button
                     key={idx}
                     onClick={() => setActiveCategory(cat.category)}
-                    className={`flex items-center justify-between w-full text-left px-2 py-1 rounded text-[10px] transition-all duration-200 cursor-pointer border ${
+                    className={`flex items-center justify-between w-full text-left px-2.5 py-1.5 rounded text-xs transition-all duration-200 cursor-pointer border ${
                       isActive 
-                        ? "bg-accent-teal/10 border-accent-teal/50 text-accent-teal" 
+                        ? "bg-accent-teal/10 border-accent-teal/50 text-accent-teal font-bold" 
                         : "bg-background/25 border-card-border/50 text-muted hover:text-foreground hover:bg-card-bg/40"
                     }`}
                   >
                     <span>{cat.category}</span>
-                    <span className="text-[8px] opacity-60">
+                    <span className="text-[9px] opacity-60">
                       {isActive ? "LIVE" : `0x0${idx}`}
                     </span>
                   </button>
@@ -144,7 +144,7 @@ export default function SignalPanel() {
 
             {/* Right pills */}
             <div className="md:col-span-7 flex flex-col gap-2">
-              <span className="text-[9px] text-muted tracking-wider uppercase mb-1 border-b border-card-border/30 pb-1 select-none">
+              <span className="text-[10px] text-muted tracking-wider uppercase mb-1 border-b border-card-border/30 pb-1 select-none">
                 DECODED_TELEMETRY
               </span>
               
@@ -167,7 +167,7 @@ export default function SignalPanel() {
                     return (
                       <span
                         key={sIdx}
-                        className={`px-1.5 py-0.5 rounded text-[10.5px] font-sans border transition-all duration-200 ${
+                        className={`px-2 py-1 rounded text-xs font-sans border transition-all duration-200 ${
                           isTarget
                             ? "bg-accent-amber/10 border-accent-amber/55 text-accent-amber font-bold font-mono shadow-sm"
                             : "bg-muted-light/65 border-card-border/70 text-foreground"
@@ -186,26 +186,26 @@ export default function SignalPanel() {
         {/* EXPERIENCE TAB */}
         {activeTab === "experience" && (
           <div className="space-y-4">
-            <span className="text-[9px] text-muted tracking-wider uppercase mb-1 border-b border-card-border/30 pb-1 block select-none">
+            <span className="text-[10px] text-muted tracking-wider uppercase mb-1 border-b border-card-border/30 pb-1 block select-none">
               HISTORICAL_TIMELINE_LOGS
             </span>
 
             {experiences.map((exp, index) => (
               <div key={index} className="border border-card-border bg-background/20 rounded p-3 relative">
                 <div className="flex items-center justify-between gap-2 border-b border-card-border/30 pb-1.5 mb-2">
-                  <div className="flex items-center gap-1.5 text-foreground font-bold font-sans">
+                  <div className="flex items-center gap-1.5 text-foreground font-bold font-sans text-sm">
                     <Briefcase size={12} className="text-accent-teal" />
                     <span>{exp.role}</span>
                   </div>
-                  <span className="text-[9.5px] text-muted">{exp.period}</span>
+                  <span className="text-xs text-muted">{exp.period}</span>
                 </div>
-                <div className="text-[9.5px] text-accent-amber font-bold mb-2">
+                <div className="text-xs text-accent-amber font-bold mb-2">
                   {exp.company} // {exp.location}
                 </div>
-                <div className="space-y-1.5 text-[10.5px] text-muted font-sans pl-1.5 border-l border-card-border/60">
+                <div className="space-y-1.5 text-sm text-muted font-sans pl-2 border-l border-card-border/60">
                   {exp.bullets.map((bullet, bIdx) => (
                     <div key={bIdx} className="flex items-start gap-1.5">
-                      <span className="text-accent-teal font-mono text-[8px] mt-1 select-none">»</span>
+                      <span className="text-accent-teal font-mono text-xs mt-1 select-none font-bold">»</span>
                       <span>{bullet}</span>
                     </div>
                   ))}
@@ -220,21 +220,21 @@ export default function SignalPanel() {
           <div className="space-y-4">
             {/* Education section */}
             <div>
-              <span className="text-[9px] text-muted tracking-wider uppercase mb-1 border-b border-card-border/30 pb-1 block select-none">
+              <span className="text-[10px] text-muted tracking-wider uppercase mb-1 border-b border-card-border/30 pb-1 block select-none">
                 ACADEMIC_RECORD
               </span>
               <div className="space-y-2.5">
                 {educationAchievements.education.map((edu, index) => (
                   <div key={index} className="border border-card-border/70 bg-background/10 rounded p-2.5">
                     <div className="flex justify-between items-start border-b border-card-border/20 pb-1 mb-1">
-                      <div className="font-bold text-foreground flex items-center gap-1">
+                      <div className="font-bold text-foreground flex items-center gap-1 text-xs">
                         <GraduationCap size={12} className="text-accent-teal" />
                         <span>{edu.degree}</span>
                       </div>
-                      <span className="text-[9px] text-muted font-mono">{edu.period}</span>
+                      <span className="text-xs text-muted font-mono">{edu.period}</span>
                     </div>
-                    <div className="text-[9.5px] text-accent-amber font-mono">{edu.institution}</div>
-                    <div className="text-[9.5px] text-muted font-mono mt-0.5">SCORE: {edu.grade}</div>
+                    <div className="text-xs text-accent-amber font-mono">{edu.institution}</div>
+                    <div className="text-xs text-muted font-mono mt-0.5">SCORE: {edu.grade}</div>
                   </div>
                 ))}
               </div>
@@ -244,10 +244,10 @@ export default function SignalPanel() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-card-border/30 pt-3">
               {/* Left Column: Certifications */}
               <div>
-                <span className="text-[9px] text-muted tracking-wider uppercase mb-1.5 block select-none">
+                <span className="text-[10px] text-muted tracking-wider uppercase mb-1.5 block select-none">
                   CERTIFICATION_KEYS
                 </span>
-                <div className="space-y-1 text-[10px] text-muted font-sans">
+                <div className="space-y-1.5 text-xs text-muted font-sans">
                   {educationAchievements.certifications.map((cert, index) => (
                     <div key={index} className="flex items-center gap-1.5 bg-background/20 p-1.5 rounded border border-card-border/40">
                       <CheckCircle size={10} className="text-accent-teal shrink-0" />
@@ -262,17 +262,17 @@ export default function SignalPanel() {
 
               {/* Right Column: Achievements */}
               <div>
-                <span className="text-[9px] text-muted tracking-wider uppercase mb-1.5 block select-none">
+                <span className="text-[10px] text-muted tracking-wider uppercase mb-1.5 block select-none">
                   SYSTEM_ACHIEVEMENTS
                 </span>
                 <div className="space-y-1.5">
                   {educationAchievements.achievements.map((ach, index) => (
                     <div key={index} className="bg-background/20 p-1.5 rounded border border-card-border/40">
-                      <div className="flex justify-between text-[10px] text-foreground font-bold font-mono">
+                      <div className="flex justify-between text-xs text-foreground font-bold font-mono">
                         <span>{ach.title}</span>
-                        <span className="text-accent-amber text-[9px]">{ach.year}</span>
+                        <span className="text-accent-amber text-xs">{ach.year}</span>
                       </div>
-                      <p className="text-[9.5px] text-muted font-sans mt-0.5">{ach.description}</p>
+                      <p className="text-xs text-muted font-sans mt-0.5">{ach.description}</p>
                     </div>
                   ))}
                 </div>
@@ -283,7 +283,7 @@ export default function SignalPanel() {
       </div>
 
       {/* Footer message */}
-      <div className="border-t border-card-border/30 pt-3 text-[9px] text-muted flex items-center gap-1.5 select-none">
+      <div className="border-t border-card-border/30 pt-3 text-xs text-muted flex items-center gap-1.5 select-none">
         <Activity size={10} className="text-accent-teal animate-pulse" />
         <span>
           {activeTab === "skills" && "Telemetry decoded. Focus centered on high-throughput ML pipelines & edge hardware optimization."}

@@ -47,7 +47,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
   }, [currentIndex, onComplete]);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col justify-between bg-[#14161A] p-8 font-mono text-xs text-accent-teal selection:bg-accent-teal/20">
+    <div className="fixed inset-0 z-50 flex flex-col justify-between bg-[#14161A] p-8 font-mono text-sm text-accent-teal selection:bg-accent-teal/20">
       <div className="flex-1 overflow-y-auto space-y-1">
         {logs.map((log, index) => (
           <div key={index} className="flex items-start">
@@ -63,11 +63,11 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
         )}
       </div>
 
-      <div className="flex justify-between items-center border-t border-card-border/30 pt-4 text-[10px] text-muted">
+      <div className="flex justify-between items-center border-t border-card-border/30 pt-4 text-xs text-muted">
         <div>SYS_ADDR: 0x14161A · IP: 127.0.0.1</div>
         <button
           onClick={onComplete}
-          className="border border-accent-teal/50 hover:bg-accent-teal/10 text-accent-teal px-3 py-1 rounded transition-colors duration-200"
+          className="border border-accent-teal/50 hover:bg-accent-teal/10 text-accent-teal px-3 py-1 rounded transition-colors duration-200 cursor-pointer"
         >
           [ SKIP_BOOT_SEQUENCE ]
         </button>

@@ -66,14 +66,14 @@ export default function CommsPanel() {
   };
 
   return (
-    <section id="comms" className="border border-card-border bg-card-bg rounded p-6 font-mono text-xs shadow-sm hover:shadow-md transition-all duration-300">
+    <section id="comms" className="border border-card-border bg-card-bg rounded p-6 font-mono text-sm shadow-sm hover:shadow-md transition-all duration-300">
       {/* Panel Header */}
       <div className="flex items-center justify-between border-b border-card-border pb-3 mb-4 select-none">
-        <div className="flex items-center gap-2 font-bold text-foreground text-xs uppercase tracking-wider">
+        <div className="flex items-center gap-2 font-bold text-foreground text-sm uppercase tracking-wider">
           <Terminal size={14} className="text-accent-teal animate-pulse" />
           <span>COMMS_PORT // TRANSMISSION_CHANNELS</span>
         </div>
-        <div className="text-[9px] text-muted tracking-wider">
+        <div className="text-xs text-muted tracking-wider">
           SOCKET: COMMS_8080 // ESTABLISHED
         </div>
       </div>
@@ -82,7 +82,7 @@ export default function CommsPanel() {
         {/* Left column: Sockets and GitHub Telemetry */}
         <div className="lg:col-span-6 flex flex-col justify-between gap-4">
           <div className="space-y-3">
-            <span className="text-[9px] text-muted tracking-wider uppercase mb-1 block select-none">
+            <span className="text-xs text-muted tracking-wider uppercase mb-1 block select-none">
               SOCKET_CHANNELS
             </span>
 
@@ -95,8 +95,8 @@ export default function CommsPanel() {
                 <Mail size={14} />
               </div>
               <div>
-                <div className="text-[9px] text-muted font-mono">SOCKET_00 // EMAIL</div>
-                <div className="font-bold text-[11px] font-mono">{contactData.email}</div>
+                <div className="text-xs text-muted font-mono">SOCKET_00 // EMAIL</div>
+                <div className="font-bold text-sm font-mono">{contactData.email}</div>
               </div>
             </a>
 
@@ -109,8 +109,8 @@ export default function CommsPanel() {
                 <Phone size={14} />
               </div>
               <div>
-                <div className="text-[9px] text-muted font-mono">SOCKET_01 // VOICE</div>
-                <div className="font-bold text-[11px] font-mono">{contactData.phone}</div>
+                <div className="text-xs text-muted font-mono">SOCKET_01 // VOICE</div>
+                <div className="font-bold text-sm font-mono">{contactData.phone}</div>
               </div>
             </a>
 
@@ -123,8 +123,8 @@ export default function CommsPanel() {
                 className="flex flex-col items-center gap-1.5 p-2 rounded border border-card-border bg-background/20 hover:border-accent-teal/50 hover:bg-accent-teal/5 text-foreground text-center transition-all duration-200"
               >
                 <GitPullRequest size={14} className="text-accent-teal" />
-                <span className="text-[9px] text-muted font-mono">SOCKET_02</span>
-                <span className="font-bold text-[9.5px] font-mono">GITHUB</span>
+                <span className="text-xs text-muted font-mono">SOCKET_02</span>
+                <span className="font-bold text-xs font-mono">GITHUB</span>
               </a>
 
               <a
@@ -134,8 +134,8 @@ export default function CommsPanel() {
                 className="flex flex-col items-center gap-1.5 p-2 rounded border border-card-border bg-background/20 hover:border-accent-teal/50 hover:bg-accent-teal/5 text-foreground text-center transition-all duration-200"
               >
                 <LinkedinIcon size={14} className="text-accent-teal" />
-                <span className="text-[9px] text-muted font-mono">SOCKET_03</span>
-                <span className="font-bold text-[9.5px] font-mono">LINKEDIN</span>
+                <span className="text-xs text-muted font-mono">SOCKET_03</span>
+                <span className="font-bold text-xs font-mono">LINKEDIN</span>
               </a>
 
               <a
@@ -145,24 +145,24 @@ export default function CommsPanel() {
                 className="flex flex-col items-center gap-1.5 p-2 rounded border border-card-border bg-background/20 hover:border-accent-teal/50 hover:bg-accent-teal/5 text-foreground text-center transition-all duration-200"
               >
                 <Code size={14} className="text-accent-teal" />
-                <span className="text-[9px] text-muted font-mono">SOCKET_04</span>
-                <span className="font-bold text-[9.5px] font-mono">LEETCODE</span>
+                <span className="text-xs text-muted font-mono">SOCKET_04</span>
+                <span className="font-bold text-xs font-mono">LEETCODE</span>
               </a>
             </div>
           </div>
 
           {/* GitHub Live Telemetry */}
           <div className="border border-card-border bg-background/45 rounded p-3 select-none">
-            <span className="text-[9px] text-muted tracking-wider uppercase mb-1.5 block">
+            <span className="text-xs text-muted tracking-wider uppercase mb-1.5 block">
               GIT_LOGS_TELEMETRY (LIVE)
             </span>
-            <div className="space-y-1 text-[10px] text-muted">
+            <div className="space-y-1 text-xs text-muted">
               <div>
                 <span className="text-accent-teal font-bold">REPO:</span> RuchitPahadia/Portfolio
               </div>
               <div>
                 <span className="text-accent-teal font-bold">COMMIT_SHA:</span>{" "}
-                <span className="bg-muted-light/60 px-1 py-0.2 rounded text-foreground font-mono text-[9px]">
+                <span className="bg-muted-light/60 px-1 py-0.2 rounded text-foreground font-mono text-xs">
                   {gitStatus.hash}
                 </span>
               </div>
@@ -178,13 +178,13 @@ export default function CommsPanel() {
 
         {/* Right column: Transmit contact form */}
         <div className="lg:col-span-6 border-l border-card-border/30 pl-0 lg:pl-6">
-          <span className="text-[9px] text-muted tracking-wider uppercase mb-2.5 block select-none">
+          <span className="text-xs text-muted tracking-wider uppercase mb-2.5 block select-none">
             COMMS_TRANSMITTER
           </span>
 
           <form onSubmit={handleTransmit} className="space-y-3 font-sans">
             <div>
-              <label className="block font-mono text-[9.5px] text-muted uppercase mb-1">
+              <label className="block font-mono text-xs text-muted uppercase mb-1">
                 TRANSMITTER_NAME
               </label>
               <input
@@ -193,12 +193,12 @@ export default function CommsPanel() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Identified sender name..."
-                className="w-full bg-background border border-card-border rounded px-3 py-2 text-xs text-foreground placeholder-muted outline-none focus:border-accent-teal transition-all duration-200 font-mono"
+                className="w-full bg-background border border-card-border rounded px-3 py-2 text-sm text-foreground placeholder-muted outline-none focus:border-accent-teal transition-all duration-200 font-mono"
               />
             </div>
 
             <div>
-              <label className="block font-mono text-[9.5px] text-muted uppercase mb-1">
+              <label className="block font-mono text-xs text-muted uppercase mb-1">
                 REPLY_PORT (EMAIL)
               </label>
               <input
@@ -207,12 +207,12 @@ export default function CommsPanel() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="yourname@domain.com"
-                className="w-full bg-background border border-card-border rounded px-3 py-2 text-xs text-foreground placeholder-muted outline-none focus:border-accent-teal transition-all duration-200 font-mono"
+                className="w-full bg-background border border-card-border rounded px-3 py-2 text-sm text-foreground placeholder-muted outline-none focus:border-accent-teal transition-all duration-200 font-mono"
               />
             </div>
 
             <div>
-              <label className="block font-mono text-[9.5px] text-muted uppercase mb-1">
+              <label className="block font-mono text-xs text-muted uppercase mb-1">
                 TRANSMISSION_PAYLOAD
               </label>
               <textarea
@@ -221,13 +221,13 @@ export default function CommsPanel() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Enter details of request..."
-                className="w-full bg-background border border-card-border rounded px-3 py-2 text-xs text-foreground placeholder-muted outline-none focus:border-accent-teal transition-all duration-200 font-mono resize-none"
+                className="w-full bg-background border border-card-border rounded px-3 py-2 text-sm text-foreground placeholder-muted outline-none focus:border-accent-teal transition-all duration-200 font-mono resize-none"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full font-mono text-[10px] font-bold tracking-wider uppercase flex items-center justify-center gap-1.5 bg-accent-teal hover:bg-accent-teal/90 text-[#14161A] py-2 rounded transition-all duration-200 cursor-pointer shadow-sm shadow-accent-teal/10"
+              className="w-full font-mono text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-1.5 bg-accent-teal hover:bg-accent-teal/90 text-[#14161A] py-2.5 rounded transition-all duration-200 cursor-pointer shadow-sm shadow-accent-teal/10"
             >
               <Send size={12} />
               <span>TRANSMIT_SIGNAL</span>
