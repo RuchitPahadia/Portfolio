@@ -24,7 +24,7 @@ const COMMAND_LIST = [
 export default function TerminalPanel() {
   const [input, setInput] = useState("");
   const [logs, setLogs] = useState<CommandLog[]>([
-    { text: "RuchitOS v4.8.0 Shell. Type 'help' to see registry.", type: "output" },
+    { text: "Welcome to Ruchit Pahadia's Systems Shell (v4.8.0). Type 'help' to see registry.", type: "output" },
   ]);
   const [showMenu, setShowMenu] = useState(false);
   const terminalEndRef = useRef<HTMLDivElement>(null);
@@ -129,7 +129,7 @@ export default function TerminalPanel() {
       <div className="flex items-center justify-between bg-card-bg/60 border-b border-card-border/80 px-4 py-2 select-none">
         <div className="flex items-center gap-2 font-bold text-foreground text-[11px] uppercase tracking-wider">
           <TerminalIcon size={12} className="text-accent-teal animate-pulse" />
-          <span>INTERACTIVE_SHELL // TASK_RUNNER</span>
+          <span>RUCHIT_PAHADIA // INTERACTIVE_SHELL</span>
         </div>
 
         {/* Top-Right Menu showing available tasks */}
