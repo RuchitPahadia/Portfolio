@@ -67,10 +67,10 @@ export default function CommsPanel() {
 
   return (
     <section id="comms" className="border border-card-border bg-card-bg rounded p-6 font-mono text-sm shadow-sm hover:shadow-md transition-all duration-300">
-      {/* Panel Header */}
+      {/* Panel Header - Large Highlighted Tab */}
       <div className="flex items-center justify-between border-b border-card-border pb-3 mb-4 select-none">
-        <div className="flex items-center gap-2 font-bold text-foreground text-sm uppercase tracking-wider">
-          <Terminal size={14} className="text-accent-teal animate-pulse" />
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-accent-teal/15 border border-accent-teal/30 rounded text-accent-teal font-bold text-sm tracking-wider uppercase">
+          <Terminal size={14} className="animate-pulse" />
           <span>COMMS_PORT // TRANSMISSION_CHANNELS</span>
         </div>
         <div className="text-xs text-muted tracking-wider">
