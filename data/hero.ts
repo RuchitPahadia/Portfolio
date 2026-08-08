@@ -24,8 +24,8 @@ export const heroData: HeroData = {
   location: "Bengaluru, Karnataka",
   socials: [
     { platform: "GitHub", url: "https://github.com/ruchitpahadia", iconName: "github" },
-    { platform: "LinkedIn", url: "#", iconName: "linkedin" },
-    { platform: "LeetCode", url: "#", iconName: "code" }
+    { platform: "LinkedIn", url: "https://www.linkedin.com/in/ruchitpahadia", iconName: "linkedin" },
+    { platform: "LeetCode", url: "https://leetcode.com/u/RuchitPahadia/", iconName: "code" }
   ],
   ctas: [
     { label: "View Projects", href: "#projects", primary: true },

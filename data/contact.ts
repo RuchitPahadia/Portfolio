@@ -12,6 +12,6 @@ export const contactData: ContactData = {
   phone: "+91 93808 69641",
   address: "Bengaluru, Karnataka, India",
   github: "https://github.com/ruchitpahadia", // Add placeholder
-  linkedin: "#", // Add placeholder
-  leetcode: "#" // Add placeholder
+  linkedin: "https://www.linkedin.com/in/ruchitpahadia", // Add placeholder
+  leetcode: "https://leetcode.com/u/RuchitPahadia/" // Add placeholder
 };

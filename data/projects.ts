@@ -50,7 +50,7 @@ export const projects: Project[] = [
       "Integrated BCrypt password hashing, layered controller-service-repository architecture, and Swagger/OpenAPI documentation"
     ],
     links: {
-      github: "#"
+      github: "https://github.com/RuchitPahadia/Enterprise_Auth"
     }
   },
   {
