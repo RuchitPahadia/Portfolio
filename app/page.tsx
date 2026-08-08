@@ -9,6 +9,7 @@ import SkillsPanel from "@/components/dashboard/SkillsPanel";
 import ExperiencePanel from "@/components/dashboard/ExperiencePanel";
 import EducationPanel from "@/components/dashboard/EducationPanel";
 import CommsPanel from "@/components/dashboard/CommsPanel";
+import TypedRole from "@/components/dashboard/TypedRole";
 
 export default function Home() {
   const [isBooting, setIsBooting] = useState(true);
@@ -34,6 +35,24 @@ export default function Home() {
 
           {/* main dashboard console grid */}
           <main className="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
+            {/* Systems Welcome Banner */}
+            <div className="bg-card-bg border border-card-border rounded p-5 select-none flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground font-sans uppercase">
+                  Ruchit Pahadia
+                </h1>
+                <div className="mt-2 flex items-center gap-2 font-mono text-xs md:text-sm text-muted">
+                  <span className="text-accent-teal font-bold">$ target_role:</span>
+                  <TypedRole />
+                </div>
+              </div>
+              <div className="font-mono text-[10px] text-muted space-y-1 border-t md:border-t-0 md:border-l border-card-border/50 pt-2 md:pt-0 md:pl-6 shrink-0">
+                <div>HOST_NODE : RUCHIT_PAHADIA_OS</div>
+                <div>SEC_SYSTEM: DECRYPT_ACTIVE</div>
+                <div>IP_SOURCE: 127.0.0.1 (LOCALHOST)</div>
+              </div>
+            </div>
+
             {/* Top row: Skills, Experience, and Education side-by-side on desktop */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <SkillsPanel />
