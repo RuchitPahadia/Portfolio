@@ -24,7 +24,9 @@ export const projects: Project[] = [
     ],
     status: "IN PROGRESS",
     links: {
-      github: "https://github.com/ruchitpahadia"
+      // TODO(ruchit): point this at the actual Carbon-Footprint repo once public;
+      // currently the GitHub profile (the repo URL was not available at build time).
+      github: "https://github.com/RuchitPahadia"
     }
   },
   {

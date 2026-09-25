@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Mono } from "next/font/google";
+import { Inter, Space_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { siteUrl } from "@/data/site";
@@ -13,6 +13,11 @@ const spaceMono = Space_Mono({
   variable: "--font-space-mono",
   subsets: ["latin"],
   weight: ["400", "700"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -39,6 +44,23 @@ export const metadata: Metadata = {
   },
 };
 
+// Pre-hydration theme resolution — eliminates the dark/light flash (FOUC).
+const themeInitScript = `(function(){try{var t=localStorage.getItem("theme");var d=t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.classList.toggle("dark",d);}catch(e){document.documentElement.classList.add("dark");}})();`;
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Ruchit Pahadia",
+  jobTitle: "ML Engineer & AI Developer",
+  url: siteUrl,
+  address: { "@type": "PostalAddress", addressLocality: "Bengaluru", addressRegion: "Karnataka", addressCountry: "IN" },
+  sameAs: [
+    "https://github.com/RuchitPahadia",
+    "https://www.linkedin.com/in/ruchitpahadia",
+    "https://leetcode.com/u/RuchitPahadia/",
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -47,10 +69,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${spaceMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${spaceMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-300">
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <ThemeProvider>
           {children}
         </ThemeProvider>

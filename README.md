@@ -1,74 +1,89 @@
-# Ruchit Pahadia Portfolio Website
+# Ruchit Pahadia — Portfolio
 
-A personal portfolio website for **Ruchit Pahadia**, a final-year Computer Science Engineering student and ML/AI Engineer based in Bengaluru, India.
+A personal portfolio for **Ruchit Pahadia**, a final-year Computer Science Engineering
+student and ML/AI Engineer based in Bengaluru, India.
 
-This project is built using a modern, performant, and developer-first design aesthetic, structured to allow easy content updates without touching layout code.
+The site is built as a **"mission-control" telemetry dashboard**: a single-page console of
+panels (projects, skills, experience, education, contact) with a premium dark-first aesthetic,
+a boot sequence, a command palette, and a live GitHub commit feed. All content is driven from
+plain data files so text can be updated without touching layout code.
 
 ## 🚀 Tech Stack
 
-- **Framework:** [Next.js 14+ (App Router, TypeScript)](https://nextjs.org/)
-- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
-- **Animations:** [Framer Motion](https://www.framer.com/motion/)
-- **Icons:** [Lucide React](https://lucide.dev/) (with custom inline brand marks)
+- **Framework:** [Next.js 16 (App Router, Turbopack, TypeScript)](https://nextjs.org/)
+- **UI:** React 19
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/) — no config file; tokens live in the
+  `@theme` block of `app/globals.css`, with class-based dark mode (`.dark`).
+- **Fonts:** `next/font/google` — Space Grotesk (display), Inter (body), Space Mono (mono).
+- **Icons:** [Lucide React](https://lucide.dev/) (plus a custom inline LinkedIn mark).
 - **Deployment:** [Vercel](https://vercel.com/)
+
+> ⚠️ **This project pins a customized build of Next.js.** APIs and conventions may differ from
+> upstream. Before changing framework-level code (metadata, fonts, images, caching, routing),
+> read the matching guide in `node_modules/next/dist/docs/`. See `AGENTS.md`.
 
 ## 📂 Project Structure
 
 ```
-├── app/                  # Next.js App Router root
-│   ├── globals.css       # Tailwind CSS import, custom variants, and themes
-│   ├── layout.tsx        # Base HTML skeleton & Global providers
-│   └── page.tsx          # Main Single-Page portfolio view
-├── components/           # UI Component definitions
-│   ├── ThemeProvider.tsx # Client-side theme provider (dark/light toggle)
-│   ├── Navbar.tsx        # Fixed floating menu with active-link scroll highlighting
-│   ├── Hero.tsx          # Headline, socials, CTA buttons, and ambient glow
-│   ├── About.tsx         # Detailed narrative and key quick-highlight cards
-│   ├── Experience.tsx    # Responsive vertical work experience & training timeline
-│   ├── Projects.tsx      # Responsive grid of expandable project cards
-│   ├── Skills.tsx        # Grid of skill cards categorized by specialty
-│   ├── Education.tsx     # Combined columns for academic path & certs
-│   ├── Contact.tsx       # Contact details, mail links, and pre-filled email form
-│   └── Footer.tsx        # Copyright and technology credits
-├── data/                 # Dynamic content definition (Edit to modify site text)
-│   ├── hero.ts           # Hero data config (names, CTAs, links)
-│   ├── about.ts          # Biography and statistics overview
-│   ├── experience.ts     # Career timeline details
-│   ├── projects.ts       # Project descriptions, stacks, and bullet points
-│   ├── skills.ts         # Technical skills categorized
-│   ├── education.ts      # University degrees and certificates
-│   └── contact.ts        # Direct links, email, phone, and addresses
-└── public/               # Asset folder (resume PDF, images)
+├── app/
+│   ├── globals.css              # Tailwind import, design tokens, glass panels, a11y rules
+│   ├── layout.tsx               # HTML shell, fonts, metadata, JSON-LD, pre-hydration theme script
+│   ├── page.tsx                 # Single-page dashboard: hero → projects → panels → contact
+│   └── api/git-commit/route.ts  # GitHub commit proxy (in-memory cache; live/cache/stale)
+├── components/
+│   ├── ThemeProvider.tsx        # Dark/light context, synced to the pre-hydration theme class
+│   └── dashboard/
+│       ├── StatusBar.tsx        # Sticky header: clock, theme toggle, resume/contact, palette
+│       ├── BootSequence.tsx     # One-per-session boot overlay (respects reduced-motion)
+│       ├── CommandPalette.tsx   # ⌘K / button launcher for navigation + quick actions
+│       ├── TypedRole.tsx        # Rotating role headline (static under reduced-motion)
+│       ├── FleetPanel.tsx       # Projects grid (the above-the-fold signal)
+│       ├── SkillsPanel.tsx      # Skill categories + inventory readout
+│       ├── ExperiencePanel.tsx  # Career timeline (highlights the Samsung cohort)
+│       ├── EducationPanel.tsx   # Degrees, certifications, achievements
+│       ├── CommsPanel.tsx       # Contact sockets + live GitHub telemetry + shell
+│       └── TerminalPanel.tsx    # Interactive shell that queries the same data files
+├── data/                        # Edit these to change site content
+│   ├── projects.ts   experience.ts   education.ts
+│   ├── skills.ts     contact.ts      site.ts
+└── public/                      # resume.pdf, favicon, static assets
 ```
 
 ## 🛠️ Getting Started
 
-First, install the package dependencies:
-
 ```bash
 npm install
+npm run dev      # http://localhost:3000
 ```
 
-Run the local development server:
+Other scripts:
 
 ```bash
-npm run dev
+npm run build    # production build (Turbopack)
+npm run lint     # ESLint (next/core-web-vitals)
+npm run start    # serve the production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✍️ Editing Content
 
-## 🎨 Theme Customization
+All copy lives in `data/*.ts`. To update projects, edit `data/projects.ts`; each project has a
+`title`, `description`, `tech[]`, `period`, `bullets[]`, `status`, and `links` (`github`/`live`).
+Links equal to `"#"` are treated as placeholders and are not rendered. The hero metric tiles in
+`app/page.tsx` are derived from real figures in `data/experience.ts` and `data/education.ts`.
 
-The site is configured with a **class-based dark mode strategy** (defaulting to dark mode) with a toggle switch. Custom design variables (e.g., background, cards, and accent colors) can be configured directly in [app/globals.css](file:///C:/Users/toruc/OneDrive/Desktop/Projects/Dashboard/app/globals.css):
+## 🎨 Theming & Accessibility
 
-- `:root` contains light mode theme variables.
-- `.dark` contains dark mode theme variables.
-- The Tailwind theme tokens are exposed via `@theme` variables.
+- **Design tokens** are defined on `:root` (light) and `.dark` (dark) in `app/globals.css` and
+  exposed to Tailwind via the `@theme` block. Light-mode accent colors are tuned to meet WCAG 2.2
+  AA contrast.
+- **No flash of the wrong theme:** an inline script in `layout.tsx` applies the stored/system
+  theme before paint; `ThemeProvider` syncs React state to it after mount.
+- **Motion** is gated globally on `prefers-reduced-motion: reduce`.
+- Panels use semantic headings, the command palette exposes dialog/listbox roles, and interactive
+  elements have visible focus rings.
 
 ## 📦 Deploying to Vercel
 
-The easiest way to deploy this app is directly through the Vercel dashboard:
-
-1. Push your code to a GitHub repository.
-2. Link the repository to a new project in [Vercel](https://vercel.com/new).
-3. Vercel will automatically detect Next.js settings and build the app under `npm run build`.
+1. Push to a GitHub repository.
+2. Import the repo at [vercel.com/new](https://vercel.com/new).
+3. Vercel detects Next.js and builds with `npm run build`.

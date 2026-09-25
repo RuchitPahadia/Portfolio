@@ -15,15 +15,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("dark"); // Dark mode default
 
   useEffect(() => {
-    // Resolve theme from a browser-only store after mount. Reading it here
-    // (rather than in a lazy useState initializer) keeps the SSR markup and the
-    // first client render identical ("dark"), avoiding a hydration mismatch —
-    // so this deferred setState in an effect is intentional.
-    const storedTheme = localStorage.getItem("theme") as Theme | null;
-    const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-    const resolved = storedTheme ?? (prefersLight ? "light" : "dark");
+    // The inline pre-hydration script in layout.tsx has already resolved and
+    // applied the theme class before paint (no FOUC). Sync React state to that
+    // source of truth after mount so the toggle icon matches what's rendered.
+    // Deferring to an effect (not a lazy initializer) keeps SSR and the first
+    // client render identical ("dark"), avoiding a hydration mismatch.
+    const isDark = window.document.documentElement.classList.contains("dark");
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setTheme(resolved);
+    setTheme(isDark ? "dark" : "light");
   }, []);
 
   useEffect(() => {

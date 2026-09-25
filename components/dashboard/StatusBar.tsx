@@ -1,10 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Download, Terminal, Mail, Sun, Moon } from "lucide-react";
+import { Download, Terminal, Mail, Sun, Moon, Command } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
 
-export default function StatusBar() {
+interface StatusBarProps {
+  onOpenPalette?: () => void;
+}
+
+export default function StatusBar({ onOpenPalette }: StatusBarProps) {
   const [time, setTime] = useState("");
   const { theme, toggleTheme } = useTheme();
 
@@ -61,8 +65,9 @@ export default function StatusBar() {
           <div className="flex items-center gap-2">
             <button
               onClick={toggleTheme}
+              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+              aria-pressed={theme === "dark"}
               className="p-1.5 rounded border border-card-border hover:bg-muted-light text-muted hover:text-foreground cursor-pointer transition-all duration-200"
-              title="Toggle system theme"
             >
               {theme === "dark" ? <Sun size={12} /> : <Moon size={12} />}
             </button>
@@ -80,11 +85,16 @@ export default function StatusBar() {
               className="flex items-center gap-1.5 px-3 py-1 rounded border border-card-border bg-background text-foreground hover:bg-accent-teal/10 hover:text-accent-teal hover:border-accent-teal/50 transition-all duration-200 font-medium"
             >
               <Mail size={12} />
-              <span>CONTACT</span>
+              <span className="hidden sm:inline">CONTACT</span>
             </a>
-            <span className="hidden xl:inline text-[10px] text-muted border border-dashed border-card-border px-1.5 py-0.5 rounded">
-              Ctrl+K
-            </span>
+            <button
+              onClick={onOpenPalette}
+              aria-label="Open command palette"
+              className="flex items-center gap-1.5 px-2 py-1 rounded border border-card-border bg-background text-muted hover:bg-accent-teal/10 hover:text-accent-teal hover:border-accent-teal/50 transition-all duration-200 font-medium cursor-pointer"
+            >
+              <Command size={12} />
+              <span className="hidden sm:inline text-[10px]">⌘K</span>
+            </button>
           </div>
         </div>
       </div>

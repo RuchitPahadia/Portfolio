@@ -52,11 +52,11 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
       },
     },
     {
-      id: "fleet",
-      title: "Jump to Fleet Panel (Projects)",
+      id: "projects",
+      title: "Jump to Projects",
       category: "Navigation",
       action: () => {
-        onNavigate("fleet");
+        onNavigate("projects");
         setIsOpen(false);
       },
     },
@@ -131,6 +131,11 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
   );
 
   useEffect(() => {
+    const openPalette = () => {
+      setSearch("");
+      setSelectedIndex(0);
+      setIsOpen(true);
+    };
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
@@ -141,8 +146,14 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
         setIsOpen((open) => !open);
       }
     };
+    // Visible trigger button (StatusBar) opens the palette via this event —
+    // makes it reachable on touch / without a keyboard.
+    document.addEventListener("open-command-palette", openPalette);
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("open-command-palette", openPalette);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   useEffect(() => {
@@ -181,16 +192,24 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-[#14161A]/80 pt-[15vh] px-4 backdrop-blur-sm">
-      <div 
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 pt-[15vh] px-4 backdrop-blur-sm"
+      onClick={() => setIsOpen(false)}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Command palette"
         className="w-full max-w-lg border border-card-border bg-card-bg shadow-2xl rounded overflow-hidden font-mono text-xs"
         onKeyDown={handleKeyDown}
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center border-b border-card-border/60 px-3 py-2.5">
           <span className="text-accent-teal mr-2 select-none font-bold">&gt;</span>
           <input
             ref={inputRef}
             type="text"
+            aria-label="Search commands"
             placeholder="Type a command or link..."
             value={search}
             onChange={(e) => {
@@ -199,7 +218,7 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
             }}
             className="w-full bg-transparent text-foreground placeholder-muted outline-none border-none text-xs"
           />
-          <button 
+          <button
             onClick={() => setIsOpen(false)}
             className="text-muted hover:text-foreground ml-2 text-[10px] border border-card-border px-1.5 py-0.5 rounded"
           >
@@ -207,7 +226,7 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
           </button>
         </div>
 
-        <div ref={listRef} className="max-h-60 overflow-y-auto py-1">
+        <div ref={listRef} role="listbox" aria-label="Commands" className="max-h-60 overflow-y-auto py-1">
           {filteredItems.length === 0 ? (
             <div className="px-4 py-3 text-muted text-center">No terminal commands found.</div>
           ) : (
@@ -216,6 +235,8 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
               return (
                 <div
                   key={item.id}
+                  role="option"
+                  aria-selected={isSelected}
                   onClick={item.action}
                   onMouseEnter={() => setSelectedIndex(index)}
                   className={`flex items-center justify-between px-4 py-2 cursor-pointer select-none border-l-2 transition-colors duration-150 ${

@@ -4,17 +4,28 @@ import React, { useState, useEffect } from "react";
 
 const roles = [
   { text: "Machine Learning Engineer", color: "text-accent-teal" },
-  { text: "Deep Learning Specialist", color: "text-purple-600 dark:text-purple-400" },
-  { text: "Computer Vision Developer", color: "text-accent-amber" },
-  { text: "NLP Systems Architect", color: "text-blue-600 dark:text-blue-400" }
+  { text: "Deep Learning Specialist", color: "text-accent-amber" },
+  { text: "Computer Vision Developer", color: "text-accent-teal" },
+  { text: "NLP Systems Architect", color: "text-accent-amber" }
 ];
 
 export default function TypedRole() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setReducedMotion(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
+    if (reducedMotion) return;
     const current = roles[roleIndex].text;
     const speed = deleting ? 35 : 55;
 
@@ -37,7 +48,16 @@ export default function TypedRole() {
       setSubIndex((i) => i + (deleting ? -1 : 1));
     }, speed);
     return () => clearTimeout(t);
-  }, [subIndex, deleting, roleIndex]);
+  }, [subIndex, deleting, roleIndex, reducedMotion]);
+
+  // Reduced motion: show the first role statically, no typing loop or caret.
+  if (reducedMotion) {
+    return (
+      <span className={`font-mono font-bold ${roles[0].color}`}>
+        {roles[0].text}
+      </span>
+    );
+  }
 
   return (
     <span className={`font-mono font-bold ${roles[roleIndex].color}`}>

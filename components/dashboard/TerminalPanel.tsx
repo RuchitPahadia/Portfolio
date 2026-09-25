@@ -124,11 +124,11 @@ export default function TerminalPanel() {
   };
 
   return (
-    <div className="border border-card-border bg-[#0E1013] rounded overflow-hidden font-mono text-xs flex flex-col h-[320px] relative">
+    <div className="border border-card-border bg-background rounded overflow-hidden font-mono text-xs flex flex-col h-[320px] relative">
       {/* Terminal Title Bar */}
       <div className="flex items-center justify-between bg-card-bg/60 border-b border-card-border/80 px-4 py-2 select-none">
         <div className="flex items-center gap-2 font-bold text-foreground text-[11px] uppercase tracking-wider">
-          <TerminalIcon size={12} className="text-accent-teal animate-pulse" />
+          <TerminalIcon size={12} className="text-accent-teal" />
           <span>RUCHIT_PAHADIA // INTERACTIVE_SHELL</span>
         </div>
 
@@ -142,7 +142,7 @@ export default function TerminalPanel() {
           </button>
           
           {showMenu && (
-            <div className="absolute right-0 mt-1.5 z-20 w-56 border border-card-border bg-[#14161A] shadow-2xl rounded py-1.5 animate-fadeIn">
+            <div className="absolute right-0 mt-1.5 z-20 w-56 border border-card-border bg-card-bg shadow-2xl rounded py-1.5 animate-fadeIn">
               <div className="px-3 py-1 border-b border-card-border/40 text-[9px] text-muted tracking-wider uppercase mb-1">
                 Click to Execute Task
               </div>

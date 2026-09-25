@@ -1,63 +1,30 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { skillCategories } from "@/data/skills";
-import { Radio, Cpu, Activity } from "lucide-react";
+import { Radio, Layers } from "lucide-react";
+
+const totalSkills = skillCategories.reduce((sum, cat) => sum + cat.items.length, 0);
 
 export default function SkillsPanel() {
-  // Deterministic initial heights keep server and first client render identical
-  // (no hydration mismatch); the interval below animates them client-side.
-  const [barHeights, setBarHeights] = useState<number[]>(() => Array(24).fill(5));
-
-  // Equalizer visualizer setup
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBarHeights((prev) =>
-        prev.map((height) => {
-          const change = Math.floor(Math.random() * 12) - 6;
-          return Math.max(5, Math.min(45, height + change));
-        })
-      );
-    }, 150);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section id="skills" className="border border-card-border bg-card-bg rounded p-5 font-mono text-sm shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between h-[580px]">
+    <section id="skills" className="glass-panel p-5 font-mono text-sm transition-all duration-300 flex flex-col justify-between lg:h-[560px]">
       {/* Panel Header - Large Highlighted Tab */}
       <div>
         <div className="flex items-center justify-between border-b border-card-border pb-3 mb-4 select-none">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-accent-teal/15 border border-accent-teal/30 rounded text-accent-teal font-bold text-sm tracking-wider uppercase">
-            <Radio size={14} className="animate-pulse" />
-            <span>SKILLS_SPECTRUM // TELEMETRY</span>
-          </div>
+          <h2 className="flex items-center gap-2 px-3 py-1.5 m-0 bg-accent-teal/15 border border-accent-teal/30 rounded text-accent-teal font-bold text-sm tracking-wider uppercase">
+            <Radio size={14} />
+            <span>SKILLS_SPECTRUM</span>
+          </h2>
           <div className="text-xs text-muted font-bold tracking-wider mr-1">CH_808.5</div>
         </div>
 
-        {/* Live Equalizer Visualizer */}
-        <div className="bg-background/40 border border-card-border/60 rounded p-3 mb-3 select-none">
-          <div className="flex items-end justify-between h-10 gap-[2px] px-1 border-b border-card-border/30">
-            {barHeights.map((height, idx) => (
-              <div 
-                key={idx}
-                className="w-full rounded-t-sm transition-all duration-150"
-                style={{
-                  height: `${height}px`,
-                  backgroundColor: idx % 2 === 0 ? "var(--accent-teal)" : "var(--accent-amber)",
-                  opacity: 0.8
-                }}
-              />
-            ))}
+        {/* Real inventory readout (replaces the former random equalizer) */}
+        <div className="bg-background/40 border border-card-border/60 rounded p-3 mb-3 select-none flex items-center justify-between text-xs text-muted">
+          <div className="flex items-center gap-1.5">
+            <Layers size={11} className="text-accent-teal" />
+            <span>{skillCategories.length} CATEGORIES · {totalSkills} COMPETENCIES</span>
           </div>
-
-          <div className="flex justify-between items-center text-xs text-muted mt-1.5">
-            <div className="flex items-center gap-1">
-              <Cpu size={9} className="text-accent-amber animate-spin" style={{ animationDuration: "4s" }} />
-              <span>MOD: QAM-64</span>
-            </div>
-            <div>STATUS: OPTIMAL</div>
-          </div>
+          <span className="text-accent-teal font-bold">FOCUS: EDGE_AI</span>
         </div>
       </div>
 
@@ -66,7 +33,7 @@ export default function SkillsPanel() {
         {skillCategories.map((cat, idx) => (
           <div key={idx} className="border border-card-border/60 bg-background/10 rounded p-3">
             <div className="text-xs text-accent-teal font-bold mb-2 border-b border-card-border/30 pb-1 select-none uppercase tracking-wide">
-              [SIG_CH.0{idx}{" // "}{cat.category}]
+              [SIG_CH.{String(idx).padStart(2, "0")}{" // "}{cat.category}]
             </div>
             <div className="flex flex-wrap gap-1.5">
               {cat.items.map((skill, sIdx) => {
@@ -102,8 +69,8 @@ export default function SkillsPanel() {
 
       {/* Footer message */}
       <div className="border-t border-card-border/30 pt-2.5 mt-2.5 text-xs text-muted flex items-center gap-1.5 select-none">
-        <Activity size={10} className="text-accent-teal animate-pulse" />
-        <span className="truncate">Telemetry decoded. Focus: Edge AI & deep learning.</span>
+        <span className="h-1.5 w-1.5 rounded-full bg-accent-teal" />
+        <span className="truncate">Focus: Edge AI &amp; deep learning.</span>
       </div>
     </section>
   );

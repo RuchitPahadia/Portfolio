@@ -1,18 +1,18 @@
 "use client";
 
 import { educationAchievements } from "@/data/education";
-import { GraduationCap, CheckCircle, Award, Activity } from "lucide-react";
+import { GraduationCap, CheckCircle, Award } from "lucide-react";
 
 export default function EducationPanel() {
   return (
-    <section id="education" className="border border-card-border bg-card-bg rounded p-5 font-mono text-sm shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between h-[580px]">
+    <section id="education" className="glass-panel p-5 font-mono text-sm transition-all duration-300 flex flex-col justify-between lg:h-[560px]">
       {/* Panel Header - Large Highlighted Tab */}
       <div>
         <div className="flex items-center justify-between border-b border-card-border pb-3 mb-4 select-none">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-accent-teal/15 border border-accent-teal/30 rounded text-accent-teal font-bold text-sm tracking-wider uppercase">
-            <GraduationCap size={14} className="animate-pulse" />
-            <span>ACADEMIC_METRICS // STATUS</span>
-          </div>
+          <h2 className="flex items-center gap-2 px-3 py-1.5 m-0 bg-accent-teal/15 border border-accent-teal/30 rounded text-accent-teal font-bold text-sm tracking-wider uppercase">
+            <GraduationCap size={14} />
+            <span>ACADEMIC_METRICS</span>
+          </h2>
           <div className="text-xs text-muted font-bold tracking-wider mr-1">SEC_VER.01</div>
         </div>
       </div>
@@ -83,8 +83,8 @@ export default function EducationPanel() {
 
       {/* Footer message */}
       <div className="border-t border-card-border/30 pt-2.5 mt-2.5 text-xs text-muted flex items-center gap-1.5 select-none">
-        <Activity size={10} className="text-accent-teal animate-pulse" />
-        <span className="truncate">Academic validation verified. Registry matches secure nodes.</span>
+        <span className="h-1.5 w-1.5 rounded-full bg-accent-teal" />
+        <span className="truncate">B.E. CSE · {educationAchievements.certifications.length} certifications</span>
       </div>
     </section>
   );

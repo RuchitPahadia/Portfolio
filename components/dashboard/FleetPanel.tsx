@@ -12,20 +12,20 @@ export default function FleetPanel() {
   };
 
   return (
-    <section id="fleet" className="border border-card-border bg-card-bg rounded p-6 font-mono text-sm shadow-sm hover:shadow-md transition-all duration-300">
+    <section id="projects" className="glass-panel p-6 font-mono text-sm transition-all duration-300">
       {/* Panel Header - Large Highlighted Tab */}
       <div className="flex items-center justify-between border-b border-card-border pb-3 mb-4 select-none">
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-accent-amber/15 border border-accent-amber/30 rounded text-accent-amber font-bold text-sm tracking-wider uppercase">
+        <h2 className="flex items-center gap-2 px-3 py-1.5 m-0 bg-accent-amber/15 border border-accent-amber/30 rounded text-accent-amber font-bold text-sm tracking-wider uppercase">
           <Terminal size={14} className="animate-pulse" />
-          <span>FLEET_STATUS // SYSTEM_MONITORS</span>
-        </div>
+          <span>FLEET_STATUS // PROJECTS</span>
+        </h2>
         <div className="text-xs text-muted font-bold tracking-wider mr-1">
-          ACTIVE_UNITS: 0{projects.length}
+          ACTIVE_UNITS: {String(projects.length).padStart(2, "0")}
         </div>
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
         {[...projects]
           .sort((a, b) => {
             if (a.status === "BUILT" && b.status !== "BUILT") return -1;
@@ -35,13 +35,13 @@ export default function FleetPanel() {
           .map((project, index) => {
             const isExpanded = expandedIndex === index;
             const isBuilt = project.status === "BUILT";
-            
+
             return (
-              <div 
+              <div
                 key={index}
                 className={`border rounded p-5 transition-all duration-300 ${
-                  isExpanded 
-                    ? "border-accent-teal/50 bg-accent-teal/[0.01]" 
+                  isExpanded
+                    ? "border-accent-teal/50 bg-accent-teal/5"
                     : "border-card-border bg-background/30 hover:border-card-border/80 hover:bg-card-bg/50"
                 }`}
               >
@@ -49,7 +49,7 @@ export default function FleetPanel() {
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-2.5 select-none">
                   <div className="flex items-center gap-2.5">
                     <span className="text-xs text-muted bg-muted-light/45 px-2 py-0.5 rounded border border-card-border/40 font-bold">
-                      NODE_0{index + 1}
+                      NODE_{String(index + 1).padStart(2, "0")}
                     </span>
                     <h3 className="font-bold text-foreground text-lg tracking-tight font-sans">
                       {project.title}

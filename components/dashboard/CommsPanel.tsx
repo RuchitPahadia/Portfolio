@@ -86,13 +86,13 @@ export default function CommsPanel() {
     : { label: "STALE", dot: "bg-red-500", text: "text-red-500", pulse: false };
 
   return (
-    <section id="comms" className="border border-card-border bg-card-bg rounded p-6 font-mono text-sm shadow-sm hover:shadow-md transition-all duration-300">
+    <section id="comms" className="glass-panel p-6 font-mono text-sm transition-all duration-300">
       {/* Panel Header - Large Highlighted Tab */}
       <div className="flex items-center justify-between border-b border-card-border pb-3 mb-4 select-none">
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-accent-teal/15 border border-accent-teal/30 rounded text-accent-teal font-bold text-sm tracking-wider uppercase">
-          <Terminal size={14} className="animate-pulse" />
-          <span>COMMS_PORT // TRANSMISSION_CHANNELS</span>
-        </div>
+        <h2 className="flex items-center gap-2 px-3 py-1.5 m-0 bg-accent-teal/15 border border-accent-teal/30 rounded text-accent-teal font-bold text-sm tracking-wider uppercase">
+          <Terminal size={14} />
+          <span>COMMS_PORT // CONTACT</span>
+        </h2>
         <div className="text-xs text-muted tracking-wider">
           SOCKET: COMMS_8080 // ESTABLISHED
         </div>

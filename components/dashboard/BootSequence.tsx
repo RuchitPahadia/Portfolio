@@ -47,7 +47,12 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
   }, [currentIndex, onComplete]);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col justify-between bg-[#14161A] p-8 font-mono text-sm text-accent-teal selection:bg-accent-teal/20">
+    <div
+      role="status"
+      aria-live="polite"
+      aria-label="System boot sequence"
+      className="fixed inset-0 z-50 flex flex-col justify-between bg-[#14161A] p-8 font-mono text-sm text-accent-teal selection:bg-accent-teal/20"
+    >
       <div className="flex-1 overflow-y-auto space-y-1">
         {logs.map((log, index) => (
           <div key={index} className="flex items-start">
