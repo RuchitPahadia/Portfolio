@@ -29,7 +29,7 @@ export default function ExperiencePanel() {
               <span className="text-xs text-muted font-mono">{exp.period}</span>
             </div>
             <div className="text-xs text-accent-amber font-bold mb-2">
-              {exp.company} // {exp.location}
+              {exp.company}{" // "}{exp.location}
             </div>
             <div className="space-y-2 text-sm text-muted font-sans pl-2 border-l border-card-border/60">
               {exp.bullets.map((bullet, bIdx) => (

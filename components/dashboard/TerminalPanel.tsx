@@ -5,6 +5,7 @@ import { Terminal as TerminalIcon, CornerDownLeft } from "lucide-react";
 import { contactData } from "@/data/contact";
 import { experiences } from "@/data/experience";
 import { projects } from "@/data/projects";
+import { skillCategories } from "@/data/skills";
 
 interface CommandLog {
   text: string;
@@ -76,11 +77,10 @@ export default function TerminalPanel() {
     } else if (args === "get skills") {
       output = [
         { text: "System Skills Telemetry Check:", type: "output" },
-        { text: "  Languages        : Python, Java, C, SQL", type: "output" },
-        { text: "  ML & Deep Learn. : PyTorch, TensorFlow, Keras, Scikit-learn", type: "output" },
-        { text: "  Computer Vision  : OpenCV, Object Detection, SORT, OCR", type: "output" },
-        { text: "  Edge Deployment  : ONNX, TF Lite, Raspberry Pi, Arduino", type: "output" },
-        { text: "  NLP & LLMs       : Transformers, BERT, spaCy, NLTK", type: "output" },
+        ...skillCategories.map((cat) => ({
+          text: `  ${cat.category.padEnd(20)}: ${cat.items.join(", ")}`,
+          type: "output" as const,
+        })),
       ];
     } else if (args === "get experience") {
       output = [

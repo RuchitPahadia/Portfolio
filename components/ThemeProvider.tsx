@@ -15,13 +15,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("dark"); // Dark mode default
 
   useEffect(() => {
-    // Check local storage or system preference
+    // Resolve theme from a browser-only store after mount. Reading it here
+    // (rather than in a lazy useState initializer) keeps the SSR markup and the
+    // first client render identical ("dark"), avoiding a hydration mismatch —
+    // so this deferred setState in an effect is intentional.
     const storedTheme = localStorage.getItem("theme") as Theme | null;
-    if (storedTheme) {
-      setTheme(storedTheme);
-    } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
-      setTheme("light");
-    }
+    const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+    const resolved = storedTheme ?? (prefersLight ? "light" : "dark");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setTheme(resolved);
   }, []);
 
   useEffect(() => {

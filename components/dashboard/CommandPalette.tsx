@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useTheme } from "@/components/ThemeProvider";
+import { contactData } from "@/data/contact";
 
 interface CommandPaletteProps {
   onNavigate: (id: string) => void;
@@ -82,7 +83,7 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
       title: "Email Ruchit (Compose Mail)",
       category: "Actions",
       action: () => {
-        window.location.href = "mailto:toruchitpahadia@gmail.com";
+        window.location.assign(`mailto:${contactData.email}`);
         setIsOpen(false);
       },
     },
@@ -91,7 +92,7 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
       title: "Open GitHub Profile",
       category: "Links",
       action: () => {
-        window.open("https://github.com/ruchitpahadia", "_blank");
+        window.open(contactData.github, "_blank");
         setIsOpen(false);
       },
     },
@@ -100,7 +101,7 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
       title: "Open LinkedIn Profile",
       category: "Links",
       action: () => {
-        window.open("https://www.linkedin.com/in/ruchitpahadia", "_blank");
+        window.open(contactData.linkedin, "_blank");
         setIsOpen(false);
       },
     },
@@ -109,7 +110,7 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
       title: "Open LeetCode Profile",
       category: "Links",
       action: () => {
-        window.open("https://leetcode.com/u/RuchitPahadia/", "_blank");
+        window.open(contactData.leetcode, "_blank");
         setIsOpen(false);
       },
     },
@@ -133,6 +134,10 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
+        // Reset query/selection here (an event handler) rather than in an
+        // effect watching isOpen, so the palette always opens clean.
+        setSearch("");
+        setSelectedIndex(0);
         setIsOpen((open) => !open);
       }
     };
@@ -142,9 +147,8 @@ export default function CommandPalette({ onNavigate }: CommandPaletteProps) {
 
   useEffect(() => {
     if (isOpen) {
-      setSearch("");
-      setSelectedIndex(0);
-      setTimeout(() => inputRef.current?.focus(), 50);
+      const focusTimer = setTimeout(() => inputRef.current?.focus(), 50);
+      return () => clearTimeout(focusTimer);
     }
   }, [isOpen]);
 

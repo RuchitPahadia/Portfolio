@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { siteUrl } from "@/data/site";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -15,7 +16,7 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ruchit-pahadia-dashboard.vercel.app"),
+  metadataBase: new URL(siteUrl),
   title: "Ruchit Pahadia | ML Engineer & AI Developer",
   description: "Portfolio of Ruchit Pahadia, a final-year CSE student and ML Engineer based in Bengaluru, specializing in end-to-end ML, computer vision, and NLP systems.",
   keywords: ["Ruchit Pahadia", "ML Engineer", "AI Developer", "Data Scientist", "BNMIT", "Bengaluru", "Portfolio"],
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ruchit Pahadia | ML Engineer & AI Developer",
     description: "Portfolio of Ruchit Pahadia, a final-year CSE student and ML Engineer based in Bengaluru, specializing in end-to-end ML, computer vision, and NLP systems.",
-    url: "https://ruchit-pahadia-dashboard.vercel.app",
+    url: siteUrl,
     siteName: "Ruchit Pahadia Portfolio",
     locale: "en_US",
     type: "website",

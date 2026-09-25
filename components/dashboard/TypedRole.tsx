@@ -23,9 +23,14 @@ export default function TypedRole() {
       return () => clearTimeout(pause);
     }
     if (deleting && subIndex === 0) {
-      setDeleting(false);
-      setRoleIndex((i) => (i + 1) % roles.length);
-      return;
+      // Pause on empty, then advance to the next role. Deferring via a timer
+      // (instead of a synchronous setState here) keeps the state transition out
+      // of the effect body and adds a natural beat between words.
+      const nextWord = setTimeout(() => {
+        setDeleting(false);
+        setRoleIndex((i) => (i + 1) % roles.length);
+      }, 500);
+      return () => clearTimeout(nextWord);
     }
 
     const t = setTimeout(() => {

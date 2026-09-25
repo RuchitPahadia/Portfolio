@@ -5,13 +5,12 @@ import { skillCategories } from "@/data/skills";
 import { Radio, Cpu, Activity } from "lucide-react";
 
 export default function SkillsPanel() {
-  const [barHeights, setBarHeights] = useState<number[]>([]);
+  // Deterministic initial heights keep server and first client render identical
+  // (no hydration mismatch); the interval below animates them client-side.
+  const [barHeights, setBarHeights] = useState<number[]>(() => Array(24).fill(5));
 
   // Equalizer visualizer setup
   useEffect(() => {
-    // Initialize 24 spectral bars
-    setBarHeights(Array.from({ length: 24 }, () => Math.floor(Math.random() * 30) + 5));
-
     const interval = setInterval(() => {
       setBarHeights((prev) =>
         prev.map((height) => {
@@ -67,7 +66,7 @@ export default function SkillsPanel() {
         {skillCategories.map((cat, idx) => (
           <div key={idx} className="border border-card-border/60 bg-background/10 rounded p-3">
             <div className="text-xs text-accent-teal font-bold mb-2 border-b border-card-border/30 pb-1 select-none uppercase tracking-wide">
-              [SIG_CH.0{idx} // {cat.category}]
+              [SIG_CH.0{idx}{" // "}{cat.category}]
             </div>
             <div className="flex flex-wrap gap-1.5">
               {cat.items.map((skill, sIdx) => {

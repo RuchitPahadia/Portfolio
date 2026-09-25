@@ -24,36 +24,66 @@ const LinkedinIcon = ({ size = 14, className = "" }: { size?: number; className?
 );
 
 export default function CommsPanel() {
-  const [gitStatus, setGitStatus] = useState({
+  const [gitStatus, setGitStatus] = useState<{
+    hash: string;
+    date: string;
+    msg: string;
+    loading: boolean;
+    source: "live" | "cache" | "stale";
+  }>({
     hash: "1a0e689",
     date: "2026-08-08 18:03:56",
     msg: "Update social links and project repository URLs",
     loading: true,
+    source: "stale",
   });
 
   // Fetch GitHub telemetry
   useEffect(() => {
-    fetch("https://api.github.com/repos/RuchitPahadia/Portfolio/commits/main")
-      .then((res) => {
-        if (!res.ok) throw new Error("API Limit");
-        return res.json();
-      })
-      .then((data) => {
-        if (data && data.sha) {
-          const dateObj = new Date(data.commit.committer.date);
-          const formattedDate = dateObj.toISOString().replace("T", " ").substring(0, 19);
-          setGitStatus({
-            hash: data.sha.substring(0, 7),
-            date: formattedDate,
-            msg: data.commit.message.split("\n")[0],
-            loading: false,
-          });
-        }
-      })
-      .catch(() => {
-        setGitStatus((prev) => ({ ...prev, loading: false }));
-      });
+    const fetchGitStatus = () => {
+      fetch("/api/git-commit")
+        .then((res) => {
+          if (!res.ok) throw new Error("API Error");
+          return res.json();
+        })
+        .then((data) => {
+          if (data && data.hash) {
+            setGitStatus({
+              hash: data.hash,
+              date: data.date,
+              msg: data.msg,
+              loading: false,
+              source:
+                data.source === "live"
+                  ? "live"
+                  : data.source === "stale"
+                  ? "stale"
+                  : "cache",
+            });
+          }
+        })
+        .catch(() => {
+          // Upstream unreachable — keep showing the last known commit, flagged stale.
+          setGitStatus((prev) => ({ ...prev, loading: false, source: "stale" }));
+        });
+    };
+
+    fetchGitStatus();
+
+    // Poll every 5 minutes; commits change rarely and the API layer caches anyway
+    const interval = setInterval(fetchGitStatus, 5 * 60 * 1000);
+    return () => clearInterval(interval);
   }, []);
+
+  // Feed status badge: live (fresh from GitHub), cached (route's in-memory copy),
+  // or stale (upstream unreachable — showing last known / seed commit).
+  const feed = gitStatus.loading
+    ? { label: "SYNC", dot: "bg-muted", text: "text-muted", pulse: true }
+    : gitStatus.source === "live"
+    ? { label: "LIVE", dot: "bg-accent-teal", text: "text-accent-teal", pulse: true }
+    : gitStatus.source === "cache"
+    ? { label: "CACHED", dot: "bg-accent-amber", text: "text-accent-amber", pulse: false }
+    : { label: "STALE", dot: "bg-red-500", text: "text-red-500", pulse: false };
 
   return (
     <section id="comms" className="border border-card-border bg-card-bg rounded p-6 font-mono text-sm shadow-sm hover:shadow-md transition-all duration-300">
@@ -143,9 +173,15 @@ export default function CommsPanel() {
 
           {/* GitHub Live Telemetry */}
           <div className="border border-card-border bg-background/45 rounded p-3 select-none">
-            <span className="text-xs text-muted tracking-wider uppercase mb-1.5 block">
-              GIT_LOGS_TELEMETRY (LIVE)
-            </span>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-xs text-muted tracking-wider uppercase">
+                GIT_LOGS_TELEMETRY
+              </span>
+              <span className={`flex items-center gap-1.5 text-xs font-bold tracking-wider ${feed.text}`}>
+                <span className={`h-1.5 w-1.5 rounded-full ${feed.dot} ${feed.pulse ? "animate-pulse" : ""}`} />
+                {feed.label}
+              </span>
+            </div>
             <div className="space-y-1 text-xs text-muted">
               <div>
                 <span className="text-accent-teal font-bold">REPO:</span> RuchitPahadia/Portfolio
