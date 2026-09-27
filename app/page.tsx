@@ -11,6 +11,7 @@ import ExperiencePanel from "@/components/dashboard/ExperiencePanel";
 import EducationPanel from "@/components/dashboard/EducationPanel";
 import CommsPanel from "@/components/dashboard/CommsPanel";
 import TypedRole from "@/components/dashboard/TypedRole";
+import SoundToggle from "@/components/dashboard/SoundToggle";
 import { contactData } from "@/data/contact";
 
 // Real, data-backed telemetry — every figure traces to data/experience.ts or
@@ -148,6 +149,9 @@ export default function Home() {
           RUCHIT_PAHADIA_PORTFOLIO_CONSOLES ver 4.8.0 // © 2026 // BUILT WITH NEXT.JS 16
         </footer>
       </div>
+
+      {/* Opt-in interface sounds — floating, self-contained, default muted. */}
+      <SoundToggle />
     </>
   );
 }
