@@ -43,6 +43,46 @@
   --glass-shadow: rgba(0, 0, 0, 0.45);
 }
 
+/* ---------------------------------------------------------------------------
+   Accent theme presets — additive, scoped by the `data-preset` attribute.
+   The primary accent is `--accent-teal`; @theme maps it lazily via var(), so
+   re-pointing the accent tokens on <html data-preset="…"> recolors the whole
+   app at runtime (same mechanism `.dark` uses). `:root`/`.dark` stay the Teal
+   base; absent/invalid preset → Teal. One light/dark pair per preset.
+--------------------------------------------------------------------------- */
+
+/* Amber — light (WCAG 2.2 AA on #f4f5f7) */
+[data-preset="amber"]:not(.dark) {
+  --accent-teal: #b45309;        /* amber-700 — AA on light (~5.9:1) */
+  --accent-amber: #b45309;
+  --dot-color: rgba(180, 83, 9, 0.06);
+  --glass-glow: rgba(180, 83, 9, 0.10);
+}
+
+/* Amber — dark (bright neon amber) */
+[data-preset="amber"].dark {
+  --accent-teal: #ffb238;
+  --accent-amber: #ffb238;
+  --dot-color: rgba(255, 178, 56, 0.05);
+  --glass-glow: rgba(255, 178, 56, 0.10);
+}
+
+/* Matrix — light (WCAG 2.2 AA on #f4f5f7) */
+[data-preset="matrix"]:not(.dark) {
+  --accent-teal: #15803d;        /* green-700 — AA on light */
+  --accent-amber: #15803d;
+  --dot-color: rgba(21, 128, 61, 0.06);
+  --glass-glow: rgba(21, 128, 61, 0.10);
+}
+
+/* Matrix — dark (bright neon green) */
+[data-preset="matrix"].dark {
+  --accent-teal: #4ade80;
+  --accent-amber: #4ade80;
+  --dot-color: rgba(74, 222, 128, 0.05);
+  --glass-glow: rgba(74, 222, 128, 0.10);
+}
+
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
