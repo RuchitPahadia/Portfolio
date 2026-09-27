@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { projects } from "@/data/projects";
-import { ExternalLink, GitBranch, Terminal, ChevronDown, ChevronUp } from "lucide-react";
+import { ExternalLink, GitBranch, Terminal, ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
 
 export default function FleetPanel() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -114,6 +115,14 @@ export default function FleetPanel() {
 
                   {/* Project Links */}
                   <div className="flex items-center gap-3">
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      className="flex items-center gap-1.5 text-xs font-bold text-accent-teal hover:text-accent-teal/80 transition-colors duration-200"
+                      title={`Read the ${project.title} case study`}
+                    >
+                      <span>Details</span>
+                      <ArrowRight size={12} />
+                    </Link>
                     {project.links.github && project.links.github !== "#" && (
                       <a
                         href={project.links.github}

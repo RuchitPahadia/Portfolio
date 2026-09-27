@@ -1,5 +1,7 @@
 export interface Project {
   title: string;
+  /** kebab-case of the title; used for the /projects/<slug> case-study route. */
+  slug: string;
   description: string;
   tech: string[];
   period: string;
@@ -9,11 +11,23 @@ export interface Project {
     github?: string;
     live?: string;
   };
+  /**
+   * Optional structured case-study depth. Only populate fields with facts that
+   * genuinely exist — never invent measured outcomes. When omitted, the
+   * case-study page falls back to `description` (problem) and `bullets`
+   * (approach), and marks the outcome section with a TODO(ruchit) placeholder.
+   */
+  caseStudy?: {
+    problem?: string;
+    approach?: string[];
+    outcome?: string[];
+  };
 }
 
 export const projects: Project[] = [
   {
     title: "Carbon Footprint Monitoring System",
+    slug: "carbon-footprint-monitoring-system",
     description: "AI-integrated IoT dashboard for campus carbon footprint, energy, and water consumption telemetry.",
     tech: ["ESP32", "Raspberry Pi 5", "MQTT", "React", "Tailwind CSS", "Python"],
     period: "2026",
@@ -31,6 +45,7 @@ export const projects: Project[] = [
   },
   {
     title: "DealerXP",
+    slug: "dealerxp",
     description: "Full-stack gamification layer for automotive dealership CRM/DMS pipelines, mapping operational event telemetry into department badges and leaderboards.",
     tech: ["React", "FastAPI", "PostgreSQL", "Redis", "Docker"],
     period: "2026",
@@ -47,6 +62,7 @@ export const projects: Project[] = [
   },
   {
     title: "Drive_Orchestrator",
+    slug: "drive-orchestrator",
     description: "Next.js application that pools photo and document storage across multiple Google Drive accounts, enabling similarity search.",
     tech: ["Next.js", "TypeScript", "PostgreSQL", "pgvector", "Redis", "BullMQ"],
     period: "2026",
@@ -62,6 +78,7 @@ export const projects: Project[] = [
   },
   {
     title: "Enterprise Auth System",
+    slug: "enterprise-auth-system",
     description: "Spring Boot backend providing stateless authentication, user profiles, and Role-Based Access Control (RBAC).",
     tech: ["Java", "Spring Boot", "PostgreSQL", "Spring Security", "JWT", "Hibernate"],
     period: "2026",
@@ -76,6 +93,7 @@ export const projects: Project[] = [
   },
   {
     title: "Clinical Decision Support System",
+    slug: "clinical-decision-support-system",
     description: "AI-augmented patient handoff platform utilizing federated learning for privacy-preserving clinical report generation.",
     tech: ["Next.js", "FastAPI", "Python", "Flower (flwr)", "Hugging Face", "spaCy"],
     period: "2025 – Present",
@@ -91,6 +109,7 @@ export const projects: Project[] = [
   },
   {
     title: "Traffic Violation Detection System",
+    slug: "traffic-violation-detection-system",
     description: "Advanced computer vision pipeline detecting wrong-way driving, motorcycle overloading (trippling), seatbelt, and helmet compliance, with real-time Automatic License Plate Recognition (ALPR).",
     tech: ["Python", "PyTorch", "YOLOv8", "SORT", "EasyOCR", "CRNN", "OpenCV"],
     period: "2025",
