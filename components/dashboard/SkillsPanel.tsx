@@ -1,9 +1,30 @@
 "use client";
 
 import { skillCategories } from "@/data/skills";
-import { Radio, Layers } from "lucide-react";
+import { Radio, Layers, BarChart3 } from "lucide-react";
 
 const totalSkills = skillCategories.reduce((sum, cat) => sum + cat.items.length, 0);
+
+const HIGHLIGHT_CATEGORY = "Edge AI & Deployment";
+
+// Real derived distribution: competencies per category (no invented ratings).
+const distribution = skillCategories.map((cat) => ({
+  category: cat.category,
+  count: cat.items.length,
+  highlight: cat.category === HIGHLIGHT_CATEGORY
+}));
+// Guard the divisor so an empty/all-empty data set can never yield NaN widths.
+const maxCount = Math.max(1, ...distribution.map((d) => d.count));
+
+// SVG geometry (viewBox units). Widths are computed here so the final bar
+// lengths are present in the server-rendered markup; the CSS animation below
+// is progressive enhancement only (reduced-motion handled in globals.css).
+const CHART_W = 260;
+const ROW_H = 30;
+const BAR_H = 7;
+const TRACK_X = 4;
+const TRACK_W = CHART_W - TRACK_X;
+const chartHeight = distribution.length * ROW_H;
 
 export default function SkillsPanel() {
   return (
@@ -25,6 +46,79 @@ export default function SkillsPanel() {
             <span>{skillCategories.length} CATEGORIES · {totalSkills} COMPETENCIES</span>
           </div>
           <span className="text-accent-teal font-bold">FOCUS: EDGE_AI</span>
+        </div>
+
+        {/* Competency-density chart (real derived counts per category).
+            Kept outside the flex-1 scroll area so it is always visible. */}
+        <div className="mb-3 select-none">
+          <div className="flex items-center gap-1.5 text-xs text-accent-teal font-bold mb-2 border-b border-card-border/30 pb-1 uppercase tracking-wide">
+            <BarChart3 size={11} />
+            <span>[DIST_MAP{" // "}COMPETENCY_DENSITY]</span>
+          </div>
+          <svg
+            viewBox={`0 0 ${CHART_W} ${chartHeight}`}
+            width="100%"
+            role="img"
+            className="block w-full h-auto"
+            preserveAspectRatio="xMinYMin meet"
+          >
+            <title>
+              {`Skills per category: ${distribution
+                .map((d) => `${d.category} ${d.count}`)
+                .join(", ")}.`}
+            </title>
+            {distribution.map((d, i) => {
+              const top = i * ROW_H;
+              const barW = Math.round((d.count / maxCount) * TRACK_W);
+              const fill = d.highlight ? "var(--accent-amber)" : "var(--accent-teal)";
+              return (
+                <g key={d.category}>
+                  <text
+                    x={TRACK_X}
+                    y={top + 9}
+                    fontSize="8.5"
+                    fill="var(--foreground)"
+                    fontWeight="600"
+                  >
+                    {d.category}
+                  </text>
+                  <text
+                    x={CHART_W}
+                    y={top + 9}
+                    fontSize="8.5"
+                    fill={fill}
+                    fontWeight="700"
+                    textAnchor="end"
+                  >
+                    {d.count}
+                  </text>
+                  <rect
+                    x={TRACK_X}
+                    y={top + 13}
+                    width={TRACK_W}
+                    height={BAR_H}
+                    rx={3}
+                    fill="var(--card-border)"
+                    opacity="0.4"
+                  />
+                  <rect
+                    className="skills-bar"
+                    x={TRACK_X}
+                    y={top + 13}
+                    width={barW}
+                    height={BAR_H}
+                    rx={3}
+                    fill={fill}
+                    style={{ transformOrigin: `${TRACK_X}px ${top + 13 + BAR_H / 2}px` }}
+                  />
+                </g>
+              );
+            })}
+          </svg>
+          <style>{`
+            @keyframes skillsBarGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+            .skills-bar { animation: skillsBarGrow 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+          `}</style>
         </div>
       </div>
 
