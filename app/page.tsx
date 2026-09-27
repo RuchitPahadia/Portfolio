@@ -10,6 +10,7 @@ import SkillsPanel from "@/components/dashboard/SkillsPanel";
 import ExperiencePanel from "@/components/dashboard/ExperiencePanel";
 import EducationPanel from "@/components/dashboard/EducationPanel";
 import CommsPanel from "@/components/dashboard/CommsPanel";
+import LiveTelemetryPanel from "@/components/dashboard/LiveTelemetryPanel";
 import TypedRole from "@/components/dashboard/TypedRole";
 import { contactData } from "@/data/contact";
 
@@ -139,6 +140,9 @@ export default function Home() {
             <ExperiencePanel />
             <EducationPanel />
           </div>
+
+          {/* Live telemetry — genuinely-fetched GitHub + LeetCode stats */}
+          <LiveTelemetryPanel />
 
           {/* Contact */}
           <CommsPanel />
