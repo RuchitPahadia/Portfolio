@@ -6,28 +6,72 @@ import { contactData } from "@/data/contact";
 import { experiences } from "@/data/experience";
 import { projects } from "@/data/projects";
 import { skillCategories } from "@/data/skills";
+import { useTheme } from "@/components/ThemeProvider";
 
 interface CommandLog {
   text: string;
   type: "input" | "output" | "error" | "success";
 }
 
-const COMMAND_LIST = [
-  { cmd: "get resume", desc: "Download Ruchit's Resume PDF" },
-  { cmd: "get skills", desc: "Display core technical skills telemetry" },
-  { cmd: "get experience", desc: "List career timeline entries" },
-  { cmd: "get projects", desc: "Check projects status monitor" },
-  { cmd: "get contact", desc: "Display communication sockets" },
-  { cmd: "help", desc: "Show this help registry" },
-  { cmd: "clear", desc: "Reset console display buffer" },
+interface CommandSpec {
+  cmd: string; // canonical form shown in help (may include an <arg> placeholder)
+  desc: string;
+  run: boolean; // true = zero-arg command safe to click-execute from the menu
+}
+
+const COMMAND_LIST: CommandSpec[] = [
+  { cmd: "whoami", desc: "Print operator identity bio line", run: true },
+  { cmd: "ls", desc: "List all project unit titles", run: true },
+  { cmd: "cat <project>", desc: "Print a project's full dossier", run: false },
+  { cmd: "socials", desc: "List social / contact links", run: true },
+  { cmd: "theme", desc: "Print the active UI theme", run: true },
+  { cmd: "get resume", desc: "Download Ruchit's Resume PDF", run: true },
+  { cmd: "get skills", desc: "Display core technical skills telemetry", run: true },
+  { cmd: "get experience", desc: "List career timeline entries", run: true },
+  { cmd: "get projects", desc: "Check projects status monitor", run: true },
+  { cmd: "get contact", desc: "Display communication sockets", run: true },
+  { cmd: "help", desc: "Show this help registry", run: true },
+  { cmd: "clear", desc: "Reset console display buffer", run: true },
 ];
 
+// Menu shows only runnable (zero-arg) commands; `cat` needs an argument.
+const MENU_COMMANDS = COMMAND_LIST.filter((c) => c.run);
+
+// Autocomplete tokens: strip any "<arg>" placeholder (e.g. "cat <project>" -> "cat").
+const AUTOCOMPLETE = COMMAND_LIST.map((c) => c.cmd.replace(/\s*<.*?>/, ""));
+
+// Derive a url-ish slug from a project title for case-insensitive `cat` matching.
+const toSlug = (title: string): string =>
+  title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+// Longest common prefix across autocomplete candidates (bash-style completion).
+const longestCommonPrefix = (items: string[]): string => {
+  if (items.length === 0) return "";
+  let prefix = items[0];
+  for (const item of items.slice(1)) {
+    while (!item.startsWith(prefix)) {
+      prefix = prefix.slice(0, -1);
+      if (!prefix) return "";
+    }
+  }
+  return prefix;
+};
+
 export default function TerminalPanel() {
+  const { theme } = useTheme();
   const [input, setInput] = useState("");
   const [logs, setLogs] = useState<CommandLog[]>([
     { text: "Welcome to Ruchit Pahadia's Systems Shell (v4.8.0). Type 'help' to see registry.", type: "output" },
   ]);
   const [showMenu, setShowMenu] = useState(false);
+  // Command history for ArrowUp / ArrowDown recall. `historyIndex` walks the
+  // range [0, history.length]; the sentinel value `history.length` is the
+  // fresh, blank prompt line (nothing recalled yet).
+  const [history, setHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(0);
   const terminalEndRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -50,10 +94,16 @@ export default function TerminalPanel() {
     const trimmed = cmdText.trim();
     if (!trimmed) return;
 
+    // Record every entered command for ArrowUp/ArrowDown recall and reset the
+    // pointer to the blank-line sentinel.
+    const nextHistory = [...history, trimmed];
+    setHistory(nextHistory);
+    setHistoryIndex(nextHistory.length);
+
     const newLogs = [...logs, { text: `ruchit_os@guest:~$ ${trimmed}`, type: "input" as const }];
 
     const args = trimmed.toLowerCase();
-    
+
     let output: CommandLog[] = [];
 
     if (args === "help") {
@@ -68,6 +118,69 @@ export default function TerminalPanel() {
       setLogs([]);
       setInput("");
       return;
+    } else if (args === "whoami") {
+      const current = experiences[0];
+      output = [
+        { text: `Ruchit Pahadia :: ${current.role} @ ${current.company}`, type: "success" },
+        { text: `Based in ${contactData.address}.`, type: "output" },
+      ];
+    } else if (args === "ls") {
+      output = [
+        { text: "Project Units:", type: "output" },
+        ...projects.map((proj) => ({
+          text: `  ${proj.title}`,
+          type: "output" as const,
+        })),
+      ];
+    } else if (args === "cat" || args.startsWith("cat ")) {
+      const query = trimmed.slice(3).trim().toLowerCase();
+      if (!query) {
+        output = [
+          { text: "Usage: cat <project>", type: "error" },
+          { text: "Run 'ls' to list available project units.", type: "output" },
+        ];
+      } else {
+        const match =
+          projects.find(
+            (p) => p.title.toLowerCase() === query || toSlug(p.title) === query
+          ) ??
+          projects.find(
+            (p) => p.title.toLowerCase().includes(query) || toSlug(p.title).includes(query)
+          );
+
+        if (!match) {
+          output = [
+            { text: `cat: no project unit matches "${trimmed.slice(3).trim()}".`, type: "error" },
+            { text: "Run 'ls' to list available project units.", type: "output" },
+          ];
+        } else {
+          output = [
+            { text: `» ${match.title}  [${match.status}]`, type: "success" },
+            { text: `  Period : ${match.period}`, type: "output" },
+            { text: `  ${match.description}`, type: "output" },
+            { text: `  Tech   : ${match.tech.join(", ")}`, type: "output" },
+            ...match.bullets.map((b) => ({ text: `  - ${b}`, type: "output" as const })),
+            ...(match.links.github
+              ? [{ text: `  GitHub : ${match.links.github}`, type: "output" as const }]
+              : []),
+            ...(match.links.live && match.links.live !== "#"
+              ? [{ text: `  Live   : ${match.links.live}`, type: "output" as const }]
+              : []),
+          ];
+        }
+      }
+    } else if (args === "socials") {
+      output = [
+        { text: "Social Sockets:", type: "output" },
+        { text: `  GitHub   : ${contactData.github}`, type: "output" },
+        { text: `  LinkedIn : ${contactData.linkedin}`, type: "output" },
+        { text: `  LeetCode : ${contactData.leetcode}`, type: "output" },
+        { text: `  Email    : ${contactData.email}`, type: "output" },
+      ];
+    } else if (args === "theme") {
+      output = [
+        { text: `Active UI theme: ${theme.toUpperCase()}`, type: "success" },
+      ];
     } else if (args === "get resume") {
       window.open("/resume.pdf", "_blank");
       output = [
@@ -123,6 +236,45 @@ export default function TerminalPanel() {
     executeCommand(input);
   };
 
+  // Walk the command history. dir = -1 moves toward older entries (ArrowUp),
+  // dir = +1 toward newer / the blank prompt (ArrowDown).
+  const navigateHistory = (dir: -1 | 1) => {
+    if (history.length === 0) return;
+    const next = Math.min(history.length, Math.max(0, historyIndex + dir));
+    setHistoryIndex(next);
+    setInput(next === history.length ? "" : history[next]);
+  };
+
+  // Tab-complete the current input against the known command tokens.
+  const handleAutocomplete = () => {
+    const prefix = input.toLowerCase().replace(/^\s+/, "");
+    if (!prefix) return;
+    const matches = AUTOCOMPLETE.filter((c) => c.startsWith(prefix));
+    if (matches.length === 0) return;
+    if (matches.length === 1) {
+      setInput(matches[0]);
+      return;
+    }
+    // Multiple candidates: extend to the longest common prefix and echo the
+    // available options, mirroring a real shell.
+    const lcp = longestCommonPrefix(matches);
+    if (lcp.length > prefix.length) setInput(lcp);
+    setLogs((prev) => [...prev, { text: matches.join("    "), type: "output" }]);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      navigateHistory(-1);
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      navigateHistory(1);
+    } else if (e.key === "Tab") {
+      e.preventDefault();
+      handleAutocomplete();
+    }
+  };
+
   return (
     <div className="border border-card-border bg-background rounded overflow-hidden font-mono text-xs flex flex-col h-[320px] relative">
       {/* Terminal Title Bar */}
@@ -146,7 +298,7 @@ export default function TerminalPanel() {
               <div className="px-3 py-1 border-b border-card-border/40 text-[9px] text-muted tracking-wider uppercase mb-1">
                 Click to Execute Task
               </div>
-              {COMMAND_LIST.map((c, idx) => (
+              {MENU_COMMANDS.map((c, idx) => (
                 <button
                   key={idx}
                   onClick={() => {
@@ -193,6 +345,7 @@ export default function TerminalPanel() {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="Run a task..."
           className="flex-1 bg-transparent text-foreground placeholder-muted outline-none border-none text-xs font-mono"
         />
